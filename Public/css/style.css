@@ -1,0 +1,19 @@
+body{
+  background: rgb(200,200,200);
+  background: -moz-radial-gradient(circle, rgba(200,200,200,1) 0%, rgba(255,255,255,1) 100%);
+  background: -webkit-radial-gradient(circle, rgba(200,200,200,1) 0%, rgba(255,255,255,1) 100%);
+  background: radial-gradient(circle, rgba(200,200,200,1) 0%, rgba(255,255,255,1) 100%);
+}
+
+.menu-side{
+  list-style: none;
+  padding:0;
+}
+
+.menu-side li{
+  margin-top: 5px;
+}
+
+.menu-side a{
+  text-decoration: none;
+}
