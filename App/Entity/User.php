@@ -32,11 +32,11 @@ class User{
   }
 
   public function setEmail($email){
-    $this->email = strtolower($email);
+    $this->email = trim(strtolower($email));
   }
 
   public function setLogin($login){
-    $this->login = strtolower($login);
+    $this->login = trim(strtolower($login));
   }
 
   public function setPassword($password){

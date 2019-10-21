@@ -114,4 +114,39 @@ class UserModel{
       return false;
     }
   }
+
+  public function getPasswaordHash($login){
+    try{
+      $sql = "SELECT us_password FROM user WHERE us_login = :login AND us_status = 1";
+      $param = array(
+        ":login" => $login
+      );
+
+      $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
+      return $dr["us_password"];
+    }catch(PDOException $ex){
+      echo $ex->getMessage();
+      return null;
+    }
+  }
+
+  public function getResumeLogin($login){
+    try{
+      $sql = "SELECT id, us_name, us_permission FROM user WHERE us_login = :login";
+      $param = array(
+        ":login" => $login
+      );
+
+      $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
+
+      return (object)array(
+        "id" => $dr["id"],
+        "name" => $dr["us_name"],
+        "permission" => $dr["us_permission"]
+      );
+    }catch(PDOException $ex){
+      echo $ex->getMessage();
+      return null;
+    }
+  }
 }

@@ -10,11 +10,22 @@ class UserController extends Controller{
   private $userModel;
 
   public function __construct(){
+    parent::__construct();
     $this->userModel= new UserModel();
+  }
+
+  private function protectMethod(){
+    if($_SESSION["p"] != 1)
+      {
+        echo "Você não possui permissão para acessar esse módulo.";
+        die();
+      }
   }
 
   /*SHOW USER*/
   public function index(){
+    $this->protectMethod();
+
     $this->Load("user/show.php", ["listUser" => $this->userModel->getAll()]);
   }
 
@@ -24,6 +35,7 @@ class UserController extends Controller{
 
   /*CREATE USER*/
   public function create(){
+    $this->protectMethod();
     $this->Load("user/create.php");
   }
 
@@ -33,7 +45,7 @@ class UserController extends Controller{
 
   /*CREATE USER*/
   public function store(){
-
+    $this->protectMethod();
     $user = new User(
       null,//ID
       filter_input(INPUT_POST, "txtName", FILTER_SANITIZE_STRING),
@@ -61,7 +73,7 @@ class UserController extends Controller{
 
   /*EDIT/UPDATE USER*/
   public function edit($id = 0){
-
+    $this->protectMethod();
     $user = $this->userModel->getById($id);
 
     if($user->name == null){
@@ -76,6 +88,7 @@ class UserController extends Controller{
   }
 
   public function update(){
+    $this->protectMethod();
     $user = new User(
       filter_input(INPUT_POST, "txtId", FILTER_SANITIZE_NUMBER_INT),//ID
       filter_input(INPUT_POST, "txtName", FILTER_SANITIZE_STRING),
@@ -102,6 +115,7 @@ class UserController extends Controller{
 
   /*CREATE USER*/
   public function passwordReset($userId){
+    $this->protectMethod();
     $password =  passwordHash(DEFAULT_USER_PASS);
     $msg;
 
