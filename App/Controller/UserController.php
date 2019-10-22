@@ -29,7 +29,7 @@ class UserController extends Controller{
     $this->Load("user/show.php", ["listUser" => $this->userModel->getAll()]);
   }
 
-  public function indexHeader(){
+  public function Headerindex(){
     echo "<title>Login - User</title>";
   }
 
@@ -39,7 +39,7 @@ class UserController extends Controller{
     $this->Load("user/create.php");
   }
 
-  public function createHeader(){
+  public function Headercreate(){
     echo "<title>Login - User Create</title>";
   }
 
@@ -67,7 +67,7 @@ class UserController extends Controller{
     $this->Load("user/store.php", ["message" => $msg]);
   }
 
-  public function storeHeader(){
+  public function Headerstore(){
     echo "<title>Login - User Store</title>";
   }
 
@@ -83,7 +83,7 @@ class UserController extends Controller{
     }
   }
 
-  public function editHeader(){
+  public function Headeredit(){
     echo "<title>Login - User Edit</title>";
   }
 
@@ -109,7 +109,7 @@ class UserController extends Controller{
     $this->Load("user/update.php", ["message" => $msg]);
   }
 
-  public function updateHeader(){
+  public function Headerupdate(){
     echo "<title>Login - User Update</title>";
   }
 
@@ -127,8 +127,39 @@ class UserController extends Controller{
     $this->Load("user/passwordreset.php", ["message" => $msg]);
   }
 
-  public function passwordResetHeader(){
+  public function HeaderpasswordReset(){
     echo "<title>Login - User Password Reset</title>";
+  }
+
+  /*CHANGE PASSOWORD USER*/
+  public function passwordchange(){
+    $this->Load("user/passwordchange.php", ["message" => $_SESSION["n"]]);
+  }
+
+  public function Headerpasswordchange(){
+    echo "<title>Login - Change password</title>";
+  }
+
+  public function passwordUpdate(){
+
+    $pass = trim(filter_input(INPUT_POST, "txtPassword", FILTER_SANITIZE_STRING));
+    $msg = "";
+    if(strlen($pass) >= 7){
+      $password =  passwordHash($pass);
+
+      if($this->userModel->passwordReset($_SESSION["i"], $password)){
+        $msg = "<span class='text-success'>Senha alterada.</span>";
+      }else{
+        $msg = "<span class='text-danger'>Houve um erro ao tentar alterar a senha, tente mais tarde.</span>";
+      }
+    }else{
+      $msg = "<span class='text-warning'>Senha inválida.</span>";
+    }
+    $this->Load("user/passwordupdate.php", ["message" => $msg]);
+  }
+
+  public function Headerpasswordupdate(){
+    echo "<title>Login - Changed password</title>";
   }
 }
 ?>

@@ -17,4 +17,4 @@ define("DEFAULT_USER_PASS", "A123456Z");
 //MODEL DEFAULT VALUES
 define("CONTROLLER", "HomeController");
 define("METHOD", "index");
-define("METHOD_HEADER", "indexHeader");//call inner <head></head>
+define("METHOD_HEADER", "Headerindex");//call inner <head></head>

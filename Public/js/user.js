@@ -26,3 +26,13 @@ function validate(update = false){
 
   return msg == "";
 }
+
+function validatePassword(){
+  var msg = "";
+  if(valueById("txtPassword").length < 7)
+    msg += "<p>- Senha inválida</p>";
+
+  setHTMLById("dvAlert", msg);
+
+  return msg == "";
+}

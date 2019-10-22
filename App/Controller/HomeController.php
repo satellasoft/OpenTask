@@ -10,7 +10,11 @@ class HomeController extends Controller{
   }
 
   public function index(){
-      $this->Load("layout/home.php");
+    $this->Load("layout/home.php");
+  }
+
+  public function Headerindex(){
+    echo "<title>Login - Home</title>";
   }
 }
 ?>
