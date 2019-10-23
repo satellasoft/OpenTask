@@ -44,7 +44,7 @@
             <div class="card-body">
               <ul class="menu-side">
                 <li><a href="<?=BASE?>user/">Usuário</a></li>
-                <li><a href="<?=BASE?>project/">Projeto</a></li>
+                <li><a href="<?=BASE?>project">Projeto</a></li>
               </ul>
             </div>
           </div>
