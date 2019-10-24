@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-md-4">
           <label for="txtTitle">Título</label>
-          <input type="text" name="txtTitle" id="txtTitle" class="form-control" placeholder="User Full Name">
+          <input type="text" name="txtTitle" id="txtTitle" class="form-control" placeholder="Project title">
         </div>
 
         <div class="col-md-4">
