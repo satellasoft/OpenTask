@@ -51,14 +51,23 @@
                   <td><?=$project->deadline != null ? convertDate($project->deadline) : "---";?></td>
                   <td><?=$status?></td>
                   <td>
-                    <a href="<?=BASE?>project/show/<?=$project->id;?>" class="btn btn-primary">Visualizar</a>
-                    <?php
-                    if($project->status == 1){
-                      ?>
-                      <a href="<?=BASE?>project/edit/<?=$project->id;?>" class="btn btn-warning">Editar</a>
-                      <?php
-                    }
-                    ?>
+                    <div class="btn-group" role="group" aria-label="button group with nested dropdown">
+                      <button type="button" class="btn btn-primary">Opções</button>
+                      <div class="btn-group" role="group">
+                        <button id="btnGroupDrop3" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop3" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 35px, 0px);">
+                          <a class="dropdown-item text-info" href="<?=BASE?>project/show/<?=$project->id;?>">Visualizar</a>
+                          <a class="dropdown-item text-info" href="<?=BASE?>group/show/<?=$project->id?>">Grupos</a>
+                          <?php
+                          if($project->status == 1){
+                            ?>
+                            <a class="dropdown-item text-warning" href="<?=BASE?>project/edit/<?=$project->id;?>">Editar</a>
+                            <?php
+                          }
+                          ?>
+                        </div>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <?php

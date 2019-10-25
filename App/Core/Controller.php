@@ -12,5 +12,13 @@ class Controller{
     extract($params);
     require_once("../App/View/" . $view);
   }
+
+  protected function protectMethod(){
+    if($_SESSION["p"] != 1)
+    {
+    $this->Load("layout/danied.php");
+      die();
+    }
+  }
 }
 ?>

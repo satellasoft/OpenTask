@@ -14,16 +14,9 @@ class ProjectController extends Controller{
     $this->projectModel= new ProjectModel();
   }
 
-  private function protectMethod(){
-    if($_SESSION["p"] != 1)
-    {
-      echo "Você não possui permissão para acessar esse módulo.";
-      die();
-    }
-  }
-
   /*SHOW PROJECT*/
   public function index(){
+    $this->protectMethod();
     $this->Load("project/list.php", ["listProject" => $this->projectModel->getAll()]);
   }
 
@@ -33,6 +26,7 @@ class ProjectController extends Controller{
 
   /*CREATE PROJECT*/
   public function create(){
+    $this->protectMethod();
     $this->Load("project/create.php");
   }
 
@@ -41,6 +35,7 @@ class ProjectController extends Controller{
   }
 
   public function store(){
+    $this->protectMethod();
     $project = new Project();
 
     //VALIDATE html field
@@ -64,6 +59,7 @@ class ProjectController extends Controller{
 
   /*EDIT PROJECT*/
   public function edit($id = 0){
+    $this->protectMethod();
     if($id > 0){
       $project = $this->projectModel->getResumeById($id);
       if($project->title != null){
@@ -84,6 +80,7 @@ class ProjectController extends Controller{
   }
 
   public function update(){
+    $this->protectMethod();
     $project = new Project();
 
     //VALIDATE html field
@@ -106,6 +103,7 @@ class ProjectController extends Controller{
 
   /*SHOW*/
   public function show($id = 0){
+    $this->protectMethod();
     if($id > 0){
       $project = $this->projectModel->getById($id);
 

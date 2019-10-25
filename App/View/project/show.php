@@ -30,7 +30,7 @@
               }
               ?>
               <td><?=$project->userName;?></td>
-              <td><?=$project->userPermission == 1 ? "Admintrador" : "Comum";?></td>
+              <td><?=$project->userPermission == 1 ? "Administrador" : "Comum";?></td>
               <td>
                 <?php
                 if($project->status == 1){

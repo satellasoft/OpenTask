@@ -21,4 +21,8 @@ function debug($element){
   echo "</pre>";
 }
 
+function redirect($url){
+  echo "<script>document.location.href='{$url}';</script>";
+}
+
 ?>

@@ -14,14 +14,6 @@ class UserController extends Controller{
     $this->userModel= new UserModel();
   }
 
-  private function protectMethod(){
-    if($_SESSION["p"] != 1)
-      {
-        echo "Você não possui permissão para acessar esse módulo.";
-        die();
-      }
-  }
-
   /*SHOW USER*/
   public function index(){
     $this->protectMethod();
