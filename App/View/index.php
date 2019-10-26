@@ -13,14 +13,14 @@
   <div class="p-2 mb-2 bg-primary text-white d-none d-sm-block">
     Open Task
   </div>
-  <?php
-  require_once("partials/menu-mobile.php");
-   ?>
+
+  <?php require_once("layout/partials/menu-mobile.php");?>
+
   <div class="row">
     <div class="col-md-2 d-none d-sm-block">
       <?php
       if($GLOBALS["logged"]){
-        require_once("partials/menu-desktop.php");
+        require_once("layout/partials/menu-desktop.php");
       }
       ?>
     </div>

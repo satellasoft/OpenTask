@@ -35,20 +35,22 @@
         </div>
       </div>
 
-        <div class="row mt-3">
-          <div class="col">
-            <textarea name="txtDescription" id="txtDescription"></textarea>
-          </div>
-        </div>
-
       <div class="row mt-3">
+        <div class="col">
+          <textarea name="txtDescription" id="txtDescription"></textarea>
+        </div>
+      </div>
+
+      <br>
+      
+      <div class="row">
         <div class="col-md-6">
           <div class="alert alert-info" id="dvAlert">
             Preencha corretamente todos os campos.
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6 ">
           <button type="submit" name="btnCreate" class="btn btn-success">Criar</button>
         </div>
       </div>

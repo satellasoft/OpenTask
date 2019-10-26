@@ -3,9 +3,11 @@ namespace App\Entity;
 use App\Entity\User;
 use App\Entity\Project;
 
-class Group{
+class UserProject{
   private $user;
   private $project;
+  private $position;
+  private $status;
 
   public function __construct(){
     $this->user = new User();
@@ -26,5 +28,21 @@ class Group{
 
   public function getProject(){
     return $this->project;
+  }
+
+  public function setPosition($position){
+    $this->position = $position;
+  }
+
+  public function getPosition(){
+    return $this->position;
+  }
+
+  public function setStatus($status){
+    $this->status = $status;
+  }
+
+  public function getStatus(){
+    return $this->status;
   }
 }

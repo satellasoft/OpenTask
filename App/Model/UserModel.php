@@ -150,5 +150,27 @@ class UserModel{
     }
   }
 
-  
+  public function getAllNotProject($projectId){
+    try{
+      $sql = "SELECT u.id, u.us_name FROM user u WHERE u.id NOT IN (SELECT up.user_id FROM user_project up WHERE up.project_id = :projectid) AND u.us_status = 1 ORDER BY u.us_name ASC ";
+      $param = array(
+        ":projectid" => $projectId
+      );
+
+      $dt = $this->pdo->ExecuteQuery($sql, $param);
+      $listUser = [];
+
+      foreach($dt as $dr){
+        $listUser[] = (object)[
+          "id" => $dr["id"],
+          "name" => $dr["us_name"]
+        ];
+      }
+
+      return $listUser;
+    }catch(PDOException $ex){
+      echo $ex->getMessage();
+      return null;
+    }
+  }
 }

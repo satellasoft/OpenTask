@@ -36,13 +36,15 @@
         </div>
       </div>
 
-        <div class="row mt-3">
-          <div class="col">
-            <textarea name="txtDescription" id="txtDescription"><?=$project->description;?></textarea>
-          </div>
-        </div>
-
       <div class="row mt-3">
+        <div class="col">
+          <textarea name="txtDescription" id="txtDescription"><?=$project->description;?></textarea>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="row">
         <div class="col-md-6">
           <div class="alert alert-info" id="dvAlert">
             Preencha corretamente todos os campos.

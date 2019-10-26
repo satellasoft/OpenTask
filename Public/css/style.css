@@ -5,6 +5,11 @@ body{
   background: radial-gradient(circle, rgba(200,200,200,1) 0%, rgba(255,255,255,1) 100%);
 }
 
+.row{
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
 .menu-side{
   list-style: none;
   padding:0;
