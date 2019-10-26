@@ -71,4 +71,45 @@ class UserProjectModel{
       return null;
     }
   }
+
+  public function getMyProjects($userId){
+    try{
+      $sql = "SELECT p.id, p.pr_title, p.pr_deadline FROM project p INNER JOIN user_project up ON up.project_id = p.id AND up.user_id = :userid WHERE up.up_status = 1 AND p.pr_status = 1 ORDER BY p.pr_created ASC";
+      $param = array(
+        ":userid" => $userId
+      );
+
+      $dt = $this->pdo->ExecuteQuery($sql, $param);
+      $listProject = [];
+
+      foreach($dt as $dr){
+        $listProject[] = (object)array(
+          "id" => $dr["id"],
+          "title" => $dr["pr_title"],
+          "deadline" => $dr["pr_deadline"]
+        );
+      }
+
+      return $listProject;
+    }catch(PDOException $ex){
+      echo $ex->getMessage();
+      return null;
+    }
+  }
+
+  public function checkPermission($projectId, $userId){
+    try{
+      $sql = "select up_status FROM user_project WHERE user_id = :userid AND project_id = :projectid AND up_status = :status";
+      $params = [
+        ":userid" => $userId,
+        ":projectid" => $projectId,
+        ":status" => 1//active
+      ];
+
+      return ($this->pdo->NumberRows($sql, $params) == 1);
+    }catch(PDOException $ex){
+      echo $ex->getMessage();
+      return false;
+    }
+  }
 }

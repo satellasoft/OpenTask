@@ -4,5 +4,4 @@
   <p>Você não possui permissão para acessar esse módulo.</p>
   <a href="<?=BASE?>" class="btn btn-secondary">Home</a>
   </div>
-
 </div>

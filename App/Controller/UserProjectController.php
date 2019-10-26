@@ -16,7 +16,7 @@ class UserProjectController extends Controller{
   }
 
   public function index(){
-      $this->Load("layout/404.php");
+    $this->Load("layout/404.php");
   }
 
   /*SHOW Group*/
@@ -59,7 +59,7 @@ class UserProjectController extends Controller{
 
   public function changeStatus($userId, $projectId, $status){
     $this->protectMethod();
-    
+
     $status = ($status == 1 ? 2 : 1);
 
     if($this->userProjectModel->changeStatus($userId, $projectId, $status)){
@@ -70,5 +70,19 @@ class UserProjectController extends Controller{
       "message" => "<span class='text-success'>Houve um erro ao tentar alterar o status</span>",
       "id" => $projectId
     ]);
+  }
+
+  public function check($projectId = 0){
+    if($projectId == 0 ){
+      echo "Invalid ID";
+      return;
+    }
+
+    if($this->userProjectModel->checkPermission($projectId, $_SESSION['i'])){
+      setcookie("pi", $projectId, null, "/");
+      redirect(BASE."project/myproject/");
+    }else{
+      $this->Load("layout/danied.php");
+    }
   }
 }

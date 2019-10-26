@@ -10,11 +10,12 @@ class HomeController extends Controller{
   }
 
   public function index(){
-    $this->Load("layout/home.php");
+    $listProject = (new \App\Model\UserProjectModel())->getMyProjects($_SESSION['i']);
+    $this->Load("layout/home.php", ["listProject" => $listProject]);
   }
 
   public function Headerindex(){
-    echo "<title>Login - Home</title>";
+    echo "<title>Home - Open Task</title>";
   }
 }
 ?>

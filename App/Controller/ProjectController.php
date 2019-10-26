@@ -122,4 +122,15 @@ class ProjectController extends Controller{
     public function Headershow(){
       echo "<title>Project show - Open Task</title>";
     }
+
+    public function myProject(){
+
+
+      $project = $this->projectModel->getById($_COOKIE['pi']);
+      $this->Load("project/myproject.php");
+    }
+
+    public function Headermyproject(){
+      echo "<title>My Project - Open Task</title>";
+    }
   }

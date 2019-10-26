@@ -22,3 +22,10 @@ body{
 .menu-side a{
   text-decoration: none;
 }
+
+
+@media (max-width: 480px) {
+  .no-padding{
+    padding:0 !important;
+  }
+}
