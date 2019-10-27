@@ -14,6 +14,10 @@ define("DB_NAME", "opentask");
 
 define("DEFAULT_USER_PASS", "A123456Z");
 
+define("DATE_FORMAT", "d/m/Y");
+define("DATETIME_FORMAT", "d/m/Y H:i:s");
+define("TIMEZONE", "America/Sao_Paulo");
+
 //MODEL DEFAULT VALUES
 define("CONTROLLER", "HomeController");
 define("METHOD", "index");

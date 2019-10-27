@@ -2,6 +2,8 @@
 require_once("../vendor/autoload.php");
 require_once("../App/Config/config.php");
 require_once("../App/Function/functions.php");
+date_default_timezone_set(TIMEZONE);
+
 //Sessions
 session_start();
 

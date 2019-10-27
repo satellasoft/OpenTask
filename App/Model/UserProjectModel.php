@@ -74,7 +74,7 @@ class UserProjectModel{
 
   public function getMyProjects($userId){
     try{
-      $sql = "SELECT p.id, p.pr_title, p.pr_deadline FROM project p INNER JOIN user_project up ON up.project_id = p.id AND up.user_id = :userid WHERE up.up_status = 1 AND p.pr_status = 1 ORDER BY p.pr_created ASC";
+      $sql = "SELECT p.id, p.pr_title, p.pr_deadline, p.pr_created FROM project p INNER JOIN user_project up ON up.project_id = p.id AND up.user_id = :userid WHERE up.up_status = 1 AND p.pr_status = 1 ORDER BY p.pr_created ASC";
       $param = array(
         ":userid" => $userId
       );
@@ -86,7 +86,8 @@ class UserProjectModel{
         $listProject[] = (object)array(
           "id" => $dr["id"],
           "title" => $dr["pr_title"],
-          "deadline" => $dr["pr_deadline"]
+          "deadline" => $dr["pr_deadline"],
+          "created" => $dr["pr_created"]
         );
       }
 
