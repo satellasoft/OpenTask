@@ -24,8 +24,34 @@ body{
 }
 
 
+.postit{
+  max-width: 300px;
+  width:100%;
+  margin:10px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.postit .postit-header{
+  background-color:#eee;
+  padding:5px;
+  text-align: center;
+}
+
+.postit .postit-header img{
+  max-width:32px;
+}
+
+.postit .postit-body{
+  padding:5px;
+}
+
 @media (max-width: 480px) {
   .no-padding{
     padding:0 !important;
+  }
+
+  .mobile-full-width{
+    width:100%;
   }
 }

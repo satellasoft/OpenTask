@@ -73,7 +73,7 @@ class UserProjectController extends Controller{
   }
 
   public function check($projectId = 0){
-    if($projectId == 0 ){
+    if($projectId <= 0 ){
       echo "Invalid ID";
       return;
     }
@@ -82,7 +82,7 @@ class UserProjectController extends Controller{
       setcookie("pi", $projectId, null, "/");
       redirect(BASE."project/myproject/");
     }else{
-      $this->Load("layout/danied.php");
+      $this->Load("layout/denied.php");
     }
   }
 }

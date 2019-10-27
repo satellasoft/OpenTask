@@ -7,3 +7,7 @@ function valueById(id){
 function setHTMLById(id, html){
   document.getElementById(id).innerHTML = html;
 }
+
+function redirect(url){
+  document.location.href = url; 
+}

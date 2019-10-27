@@ -16,7 +16,7 @@ class Controller{
   protected function protectMethod(){
     if($_SESSION["p"] != 1)
     {
-    $this->Load("layout/danied.php");
+    $this->Load("layout/denied.php");
       die();
     }
   }

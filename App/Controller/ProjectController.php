@@ -124,10 +124,12 @@ class ProjectController extends Controller{
     }
 
     public function myProject(){
-
-
       $project = $this->projectModel->getById($_COOKIE['pi']);
-      $this->Load("project/myproject.php");
+      $notes = (new \App\Model\NoteModel())->getAllResumed($_COOKIE['pi']);
+      $this->Load("project/myproject.php",
+      ["project" => $project,
+      "listNote" => $notes]      
+      );
     }
 
     public function Headermyproject(){

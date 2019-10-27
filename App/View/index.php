@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="p-2 mb-2 bg-primary text-white d-none d-sm-block">
-    Open Task
+  <a href="<?=BASE?>"><img src="<?=BASE?>img/logo-white.png" alt="Open Task" style="max-width: 150px;"></a>
   </div>
 
   <?php require_once("layout/partials/menu-mobile.php");?>
