@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Controller;
+use App\Core\Controller;
+use App\Model\TaskModel;
+use App\Entity\Task;
+
+class TaskController extends Controller{
+
+  private $taskModel;
+
+  public function __construct(){
+    parent::__construct();
+
+    $this->taskModel = new TaskModel();
+  }
+
+  public function index(){
+    $this->Load("layout/404.php");
+  }
+
+  public function create(){
+    $this->Load("task/create.php");
+  }
+
+  public function Headercreate(){
+    echo "<title>Task - Open Task</title>";
+  }
+
+  public function store(){
+    $task = new Task();
+
+    $task->setTitle(filter_input(INPUT_POST, "txtTitle", FILTER_SANITIZE_STRING));
+    $task->setDescription(filter_input(INPUT_POST, "txtDescription", FILTER_SANITIZE_SPECIAL_CHARS));
+    $task->setDeadline(filter_input(INPUT_POST, "txtDeadline", FILTER_SANITIZE_STRING));
+    $task->setStatus(filter_input(INPUT_POST, "slStatus", FILTER_SANITIZE_NUMBER_INT));
+    $task->setCreated(getCurrentDate());
+    $task->getUser()->setId($_SESSION["i"]);
+    $task->getProject()->setId($_COOKIE['pi']);
+
+    $id = $this->taskModel->store($task);
+
+    if($id > 0)
+      redirect(BASE . "task/show/{$id}");
+    else
+      $this->Load("task/result.php", ["message" => "Houve um erro ao tentar cadastrar"]);
+  }
+
+  public function show($id = 0){
+    if($id <= 0){
+      $this->Load("layout/404.php");
+      return;
+    }
+
+    $task = $this->taskModel->getById($id, $_COOKIE['pi']);
+
+    if($task->title == null){
+      $this->Load("task/result.php", ["message" => "Tarefa não encontrada"]);
+      return;
+    }else{
+      $this->Load("task/show.php", ["task" => $task]);
+    }
+  }
+
+  public function Headershow(){
+    echo "<title>Task - Open Task</title>";
+  }
+}
+?>

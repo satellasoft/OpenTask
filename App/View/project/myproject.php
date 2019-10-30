@@ -13,14 +13,14 @@
       <div class="col-md-6 no-padding">
         <button type="button" class="btn btn-primary mobile-full-width mb-2" data-toggle="modal" data-target="#modalDescription">Detalhes do projeto</button>
         <a href="<?=BASE?>note/create/" class="btn btn-info mobile-full-width mb-2">Nova Nota</a>
-        <a href="#" class="btn btn-info mobile-full-width mb-2">Nova Tarefa</a>
+        <a href="<?=BASE?>task/create/" class="btn btn-info mobile-full-width mb-2">Nova Tarefa</a>
       </div>
     </div>
 
     <h4>Notas</h4>
     <div class="row">
       <?php
-    foreach($listNote as $note){
+      foreach($listNote as $note){
         ?>
         <div class="col-md-3 col-sm-6 no-padding">
           <div class="postit" onclick="redirect('<?=BASE?>note/show/<?=$note->id;?>');">
@@ -37,8 +37,55 @@
       ?>
     </div>
     <p class="text-right"><a href="<?=BASE?>note/" class="btn btn-secondary btn-sm mobile-full-width">Mostrar todas >>></a></p>
-    <hr>
+
+    <h4>Tarefas</h4>
+    <div class="row">
+      <div class="col">
+        <div class="overflow-auto">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Criado</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Autor</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              foreach($listTask as $task){
+                ?>
+                <tr>
+                  <td><?=$task->title;?></td>
+                  <td><?=convertDate($task->created, DATE_FORMAT);?></td>
+                  <td><?=convertDate($task->deadline, DATETIME_FORMAT);?></td>
+                  <td><?=$task->status == 1 ? "Ativo" : "Bloqueado";?></td>
+                  <td><?=$task->username;?></td>
+                  <td>
+                    <a href="<?=BASE?>task/show/<?=$task->id;?>" class="btn btn-info btn-sm">Visualizar</a>
+                    </td>
+                </tr>
+                <?php
+              }
+              ?>
+            </tbody>
+            <!--
+            "id" => $dr["id"],
+            "title" => $dr["tk_title"],
+            "deadline" => $dr["tk_deadline"],
+            "status" => $dr["tk_status"],
+            "created" => $dr["tk_created"],
+            "username" => $dr["us_name"]
+          -->
+        </table>
+      </div>
+    </div>
   </div>
+
+
+</div>
 </div>
 <!--MODAL DESCRIPTION-->
 
