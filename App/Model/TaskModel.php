@@ -36,9 +36,36 @@ class TaskModel{
     }
   }
 
+
+  public function update(Task $task){
+    try{
+      $sql = "UPDATE task SET tk_title = :title, tk_description = :description, tk_deadline = :deadline, tk_status = :status WHERE user_id = :userid AND project_id = :projectid AND id = :id";
+
+      $params = array(
+        ":id"          => $task->getId(),
+        ":title"       => $task->getTitle(),
+        ":description" => $task->getDescription(),
+        ":deadline"    => $task->getDeadline(),
+        ":status"      => $task->getStatus(),
+        ":userid"      => $task->getUser()->getId(),
+        ":projectid"   => $task->getProject()->getId()
+      );
+
+      $result = $this->pdo->ExecuteNonQuery($sql, $params);
+
+      if($result)
+        return $task->getId();
+      else
+        return -1;
+    }catch(PDOException $ex){
+      echo $ex->getMessage();
+      return false;
+    }
+  }
+
   public function getById(int $taskId, int $projectId){
     try{
-      $sql = "SELECT t.tk_title, t.tk_description, t.tk_deadline, t.tk_status, t.tk_created, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id WHERE t.project_id = :projectid AND t.id = :taskid";
+      $sql = "SELECT t.tk_title, t.tk_description, t.tk_deadline, t.tk_status, t.tk_created, u.us_name, u.id as userid FROM task t INNER JOIN user u ON u.id = t.user_id WHERE t.project_id = :projectid AND t.id = :taskid";
       $params = array(
         ":projectid" => $projectId,
         ":taskid" => $taskId
@@ -52,7 +79,8 @@ class TaskModel{
         "deadline" => $dr["tk_deadline"],
         "status" => $dr["tk_status"],
         "created" => $dr["tk_created"],
-        "username" => $dr["us_name"]
+        "userid" => $dr["userid"],
+        "username" => $dr["us_name"],
       ];
     }catch(PDOException $ex){
       echo $ex->getMessage();

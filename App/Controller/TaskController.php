@@ -41,10 +41,53 @@ class TaskController extends Controller{
     $id = $this->taskModel->store($task);
 
     if($id > 0)
-      redirect(BASE . "task/show/{$id}");
+    redirect(BASE . "task/show/{$id}");
     else
-      $this->Load("task/result.php", ["message" => "Houve um erro ao tentar cadastrar"]);
+    $this->Load("task/result.php", ["message" => "Houve um erro ao tentar cadastrar"]);
   }
+
+  //UPDATE
+  public function edit($id = 0){
+    if($id < 0){
+      $this->notFound();
+      return;
+    }
+
+    $task = $this->taskModel->getById($id, $_COOKIE['pi']);
+
+    if($task->title == null || $task->userid != $_SESSION['i']){
+      $this->notFound();
+      return;
+    }
+
+    $this->Load("task/edit.php", ["task" => $task]);
+  }
+
+  public function Headeredit(){
+    echo "<title>Edit - Open Task</title>";
+  }
+
+  public function update(){
+    $task = new Task();
+
+    $task->setId(filter_input(INPUT_POST, "txtId", FILTER_SANITIZE_NUMBER_INT));
+    $task->setTitle(filter_input(INPUT_POST, "txtTitle", FILTER_SANITIZE_STRING));
+    $task->setDescription(filter_input(INPUT_POST, "txtDescription", FILTER_SANITIZE_SPECIAL_CHARS));
+    $task->setDeadline(filter_input(INPUT_POST, "txtDeadline", FILTER_SANITIZE_STRING));
+    $task->setStatus(filter_input(INPUT_POST, "slStatus", FILTER_SANITIZE_NUMBER_INT));
+    $task->getUser()->setId($_SESSION["i"]);
+    $task->getProject()->setId($_COOKIE['pi']);
+
+    $id = $this->taskModel->update($task);
+
+    if($id > 0)
+    redirect(BASE . "task/edit/{$id}");
+    else
+    $this->Load("task/result.php", ["message" => "Houve um erro ao tentar cadastrar"]);
+  }
+
+
+  //SHOW
 
   public function show($id = 0){
     if($id <= 0){

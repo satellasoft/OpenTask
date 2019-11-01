@@ -35,7 +35,9 @@
                 <td><?=$task->status == 1 ? "Ativo" : "Finalizado";?></td>
                 <td><?=convertDate($task->created, DATETIME_FORMAT)?></td>
                 <td><?=$task->username;?></td>
-                <td>...</td>
+                <td><?php if($task->userid == $_SESSION['i']){ ?>
+                  <a href="<?=BASE?>task/edit/<?=$task->id;?>" class="btn btn-primary btn-sm">Editar</a>
+                <?php }else{ echo "---"; } ?></td>
               </tr>
             </tbody>
           </table>
