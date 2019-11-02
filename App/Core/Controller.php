@@ -4,7 +4,7 @@ namespace App\Core;
 class Controller{
   public function __construct($protectedLogin = true){
     if($protectedLogin && !$GLOBALS["logged"]){
-      header("Location: " . BASE . "login/");
+      redirect(BASE . "login/");
     }
   }
 
