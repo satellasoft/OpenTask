@@ -11,7 +11,7 @@ class LoginController extends Controller{
 
   public function index(){
     if($GLOBALS["logged"]){
-      header("Location: " . BASE);
+      redirect(BASE);
     }
 
     $this->Load("login/login.php");
@@ -19,7 +19,7 @@ class LoginController extends Controller{
 
   public function logout(){
     session_destroy();
-    header("Location: " . BASE);
+    redirect(BASE);
   }
 
   public function indexHeader(){
@@ -45,7 +45,7 @@ class LoginController extends Controller{
 
         $name = explode(" ", $user->name);
         $_SESSION["n"] = $name[0];
-        header("Location: " . BASE);
+        redirect(BASE);
       }else{
         $this->Load("login/auth.php", ["msg" => "Login ou senha inválidos"]);
       }
