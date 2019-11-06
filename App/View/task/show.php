@@ -4,12 +4,16 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="<?=BASE?>">Home</a></li>
           <li class="breadcrumb-item"><a href="<?=BASE?>project/myproject">Meu Projeto</a></li>
-          <li class="breadcrumb-item active"><?=$task->title?></li>
+          <li class="breadcrumb-item active"><?=$task->title;?></li>
         </ol>
+      </div>
+
+      <div class="col-md-6">
+        <a href="<?=BASE?>forum/create/<?=$task->id?>" class="btn btn-info">Novo fórum</a>
       </div>
     </div>
 
@@ -48,6 +52,33 @@
         </div>
       </div>
     </div>
-  </div>
+
+    <hr>
+
+    <?php
+    foreach($forum as $f){
+      ?>
+      <div class="card mb-3">
+        <div class="card-header"><span class="font-weight-bold">Criado em: </span> <?=convertDate($f->created, DATETIME_FORMAT)?>___<span class="font-weight-bold">Por: </span> <?=$f->userName;?></div>
+        <div class="card-body">
+          <h4 class="card-title"><?=$f->title?></h4>
+          <div>
+              <?=html_entity_decode($f->content);?>
+          </div>
+
+          <a href="<?=BASE?>forum/show/<?=$f->id;?>" class="btn btn-info btn-sm">Visualizar</a>
+
+        </div>
+      </div>
+    <?php
+  }
+  ?>
+
+</div>
 </div>
 <script src="<?=BASE?>js/task.js"></script>
+<script src="<?=BASE?>js/forum.js"></script>
+<script src="<?=BASE?>/highlight/highlight.pack.js"></script>
+<script>
+  RunHeighLight();
+</script>

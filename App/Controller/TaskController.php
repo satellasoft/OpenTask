@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Core\Controller;
 use App\Model\TaskModel;
+use App\Model\ForumModel;
 use App\Entity\Task;
 
 class TaskController extends Controller{
@@ -101,12 +102,17 @@ class TaskController extends Controller{
       $this->Load("task/result.php", ["message" => "Tarefa não encontrada"]);
       return;
     }else{
-      $this->Load("task/show.php", ["task" => $task]);
+      $this->Load("task/show.php",
+      [
+        "task" => $task,
+        "forum" => (new ForumModel())->getAll($id)
+      ]);
     }
   }
 
   public function Headershow(){
     echo "<title>Task - Open Task</title>";
+    echo "<link rel='stylesheet' href='".BASE."highlight/styles/atom-one-dark.css'>";
   }
 }
 ?>

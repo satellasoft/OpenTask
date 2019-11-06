@@ -50,9 +50,9 @@ class ProjectController extends Controller{
 
     $msg = "";
     if($this->projectModel->store($project))
-    $msg = "<span class='text-success'>Projeto criado</span>";
+      $msg = "<span class='text-success'>Projeto criado</span>";
     else
-    $msg = "<span class='text-danger'>Houve um erro ao tentar criar o projeto</span>";
+      $msg = "<span class='text-danger'>Houve um erro ao tentar criar o projeto</span>";
 
     $this->Load("project/result.php", ["message" => $msg]);
   }
