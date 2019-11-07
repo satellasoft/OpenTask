@@ -34,9 +34,9 @@ class ForumModel{
     }
   }
 
-  public function getById($taskId){
+  public function getByTaskId($taskId){
     try{
-      $sql = "SELECT f.fr_title, f.fr_content, f.fr_created, t.id as taskid, t.tk_title as taskname, u.us_name FROM forum f INNER JOIN task t ON t.id = f.task_id INNER JOIN user u ON u.id = f.user_id WHERE f.id = :taskid";
+      $sql = "SELECT f.id, f.fr_title, f.fr_content, f.fr_created, t.id as taskid, t.tk_title as taskname, u.us_name FROM forum f INNER JOIN task t ON t.id = f.task_id INNER JOIN user u ON u.id = f.user_id WHERE f.id = :taskid";
       $param = array(
         ":taskid" => $taskId
       );
@@ -44,7 +44,7 @@ class ForumModel{
       $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
 
       $forum = new Forum();
-      $forum->setId($taskId);
+      $forum->setId($dr["id"]);
       $forum->setTitle($dr["fr_title"]);
       $forum->setContent($dr["fr_content"]);
       $forum->setCreated($dr["fr_created"]);

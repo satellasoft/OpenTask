@@ -35,11 +35,58 @@
     <div>
       <?=html_entity_decode($forum->getContent());?>
     </div>
+    <button onclick="showModal('dvModalComment');" type="button" name="button" class="btn btn-success btn-sm">Comentar</button>
+
+    <hr>
+
+    <?php
+      foreach($listComment as $comment){
+        ?>
+        <div class="card mb-3">
+          <div class="card-header">
+            <p><span class="font-weight-bold">Criado em </span> <?=convertDate($comment->created, DATETIME_FORMAT); ?> <span class="font-weight-bold">Por </span> <?=$comment->username; ?></p>
+          </div>
+
+          <div class="card-body">
+            <?=html_entity_decode($comment->content);?>
+          </div>
+        </div>
+        <?php
+      }
+    ?>
 
   </div>
 </div>
+<br>
+
+<div id="dvModalComment" class="op-modal-bg">
+  <div class="op-modal-content">
+    <form action="<?=BASE?>forum/comment" method="post" onsubmit="return validateForumComment()">
+      <div class="op-modal-header">
+        Comentar
+      </div>
+
+      <div class="op-modal-body">
+        <input type="hidden" name="txtForumId" id="txtForumId" value="<?=$forum->getTask()->getId();?>">
+        <textarea name="txtContent" id="txtContent"></textarea>
+        <div class="alert alert-info" id="dvAlert">
+          &nbsp;
+        </div>
+      </div>
+
+      <div class="op-modal-footer">
+        <button type="button" name="button" class="btn btn-danger btn-sm" onclick="closeModal('dvModalComment');">Fechar</button>
+        <button type="submit" name="button" class="btn btn-success btn-sm">Comentar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="<?=BASE?>ckeditor/ckeditor.js"></script>
 <script src="<?=BASE?>js/forum.js"></script>
+
 <script src="<?=BASE?>/highlight/highlight.pack.js"></script>
 <script>
-  RunHeighLight();
+RunHeighLight();
+CKEDITOR.replace("txtContent");
 </script>

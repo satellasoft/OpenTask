@@ -55,3 +55,45 @@ body{
     width:100%;
   }
 }
+
+/*MODAL*/
+.op-modal-bg{
+  background-color: rgba(59, 71, 84, .7);
+  width:100vw;
+  height: 100vh;
+  top:0;
+  left:0;
+  position: fixed;
+  z-index: 000;
+  display: none;
+}
+
+.op-modal-content{
+  margin: 0 auto;
+  padding: 0;
+  margin-top:5%;
+  background-color: #FFF;
+  max-width: 900px;
+  width:100%;
+  padding:10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #fff;
+}
+
+.op-modal-header{
+  background-color: rgba(59, 71, 84, 1);
+  padding: 10px;
+  color: #FFF;
+  font-size: 1.1em;
+}
+
+.op-modal-body{
+    padding: 10px;
+}
+
+.op-modal-footer{
+  text-align: right;
+  border-top: 2px solid #eee;
+  padding: 10px;
+}

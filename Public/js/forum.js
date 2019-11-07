@@ -15,6 +15,20 @@ function validateProject(){
   return msg == "";
 }
 
+function validateForumComment(){
+  var msg = "";
+
+  if(valueById("txtForumId") <= 0)
+  msg += "<p>- Fórum não encontrado</p>";
+
+  if(CKEDITOR.instances['txtContent'].getData().length < 10)
+  msg += "<p>- Conteúdo inválido</p>";
+
+  setHTMLById("dvAlert", msg);
+
+  return msg == "";
+}
+
 function RunHeighLight(){
   document.addEventListener("DOMContentLoaded", function(){
     $('pre code').each(function (i, block) {

@@ -15,6 +15,7 @@ class Core{
 
   private function normalizeUri(){
     $explode = str_replace("?", "/", $_SERVER["REQUEST_URI"]);
+    $explode = str_replace("#", "/", $explode);
     $explode = explode( "/", $explode);
 
     for ($i=0; $i < URI_UNLINK_COUNT; $i++) {

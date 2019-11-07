@@ -3,7 +3,9 @@
 namespace App\Controller;
 use App\Core\Controller;
 use App\Model\ForumModel;
+use App\Model\ForumCommentModel;
 use App\Entity\Forum;
+use App\Entity\ForumComment;
 
 class ForumController extends Controller{
 
@@ -51,7 +53,7 @@ class ForumController extends Controller{
     }else{
       $this->Load("forum/result.php",
       [
-        "message" => "Não foi possível criar um novo fórum. Tente mais tarde..."
+        "message" => "Não foi possível criar um novo fórum. Tente mais tarde."
       ]);
     }
   }
@@ -63,13 +65,37 @@ class ForumController extends Controller{
       $this->notFound();
       return;
     }
-
+    $forum = $this->forumModel->getByTaskId($taskId);
     $this->Load("forum/show.php",
-    ["forum" => $this->forumModel->getById($taskId)]);
+    [
+      "forum" => $forum,
+      "listComment" => (new ForumCommentModel())->getAllComplete($forum->getId())
+    ]);
   }
 
   public function Headershow(){
     echo "<title>Topic Forum - Open Task</title>";
     echo "<link rel='stylesheet' href='".BASE."highlight/styles/atom-one-dark.css'>";
+  }
+
+  ///FORUM COMMENT
+
+  public function comment(){
+    $fc = new ForumComment();
+    $fc->getForum()->setId(filter_input(INPUT_POST, 'txtForumId', FILTER_SANITIZE_NUMBER_INT));
+    $fc->getUser()->setId($_SESSION['i']);
+    $fc->setSubid(filter_input(INPUT_POST, 'txtSubid', FILTER_SANITIZE_NUMBER_INT));
+    $fc->setContent(filter_input(INPUT_POST, 'txtContent', FILTER_SANITIZE_SPECIAL_CHARS));
+    $fc->setCreated(getCurrentDate());
+
+    $result = (new ForumCommentModel())->store($fc);
+    if($result > 0){
+      redirect(BASE . "forum/show/" . $fc->getForum()->getId() . "#comment{$result}");
+    }else{
+      $this->Load("forum/result.php",
+      [
+        "message" => "Não foi possível criar um comentário. Tente mais tarde."
+      ]);
+    }
   }
 }
