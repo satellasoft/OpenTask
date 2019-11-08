@@ -42,9 +42,9 @@
     <?php
       foreach($listComment as $comment){
         ?>
-        <div class="card mb-3">
+        <div class="card mb-3" id="comment<?=$comment->id; ?>">
           <div class="card-header">
-            <p><span class="font-weight-bold">Criado em </span> <?=convertDate($comment->created, DATETIME_FORMAT); ?> <span class="font-weight-bold">Por </span> <?=$comment->username; ?></p>
+            <p><span class="font-weight-bold text-info"> <?=$comment->username; ?></span> - <span class="font-weight-bold"><?=convertDate($comment->created, DATETIME_FORMAT); ?></span> </p>
           </div>
 
           <div class="card-body">
@@ -54,7 +54,6 @@
         <?php
       }
     ?>
-
   </div>
 </div>
 <br>
@@ -67,7 +66,7 @@
       </div>
 
       <div class="op-modal-body">
-        <input type="hidden" name="txtForumId" id="txtForumId" value="<?=$forum->getTask()->getId();?>">
+        <input type="hidden" name="txtForumId" id="txtForumId" value="<?=$forum->getId();?>">
         <textarea name="txtContent" id="txtContent"></textarea>
         <div class="alert alert-info" id="dvAlert">
           &nbsp;
