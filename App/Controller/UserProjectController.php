@@ -46,7 +46,7 @@ class UserProjectController extends Controller{
     $projectId = $userProject->getProject()->getId();
 
     if($this->userProjectModel->store($userProject)){
-      redirect(BASE . "userproject/show/". $projectId);
+      redirect(BASE . "userProject/show/". $projectId);
     }else{
       $message = "<span class='text-success'>Houve um erro ao tentar inserir</span>";
     }
@@ -63,7 +63,7 @@ class UserProjectController extends Controller{
     $status = ($status == 1 ? 2 : 1);
 
     if($this->userProjectModel->changeStatus($userId, $projectId, $status)){
-      redirect(BASE . "userproject/show/". $projectId);
+      redirect(BASE . "userProject/show/". $projectId);
     }
 
     $this->Load("userproject/result.php", [

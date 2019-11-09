@@ -60,7 +60,7 @@
 <div class="modal fade" id="modalInsert">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form action="<?=BASE?>userproject/store" method="post">
+      <form action="<?=BASE?>userProject/store" method="post">
         <div class="modal-header">
           <h5 class="modal-title">Inserir usuários</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
