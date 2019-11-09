@@ -2,7 +2,7 @@
   <div class="card border-secondary">
     <div class="card-header">
       <img src="<?=BASE?>img/logo_color.png" alt="Open Task Logo" style="max-width:32px;">
-      Login - Open Task
+      Open Task
     </div>
     <div class="card-body">
       <form method="post" action="<?=BASE?>login/auth" onsubmit="return login();">
