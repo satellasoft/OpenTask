@@ -7,7 +7,7 @@
       <div class="col-md-12">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="<?=BASE?>">Home</a></li>
-          <li class="breadcrumb-item"><a href="<?=BASE?>task/show/<?=$forum->getTask()->getId();?>">Tarefa</a></li>
+          <li class="breadcrumb-item"><a href="<?=BASE?>task/show/<?=$forum->getTask()->getId();?>">Fórum</a></li>
           <li class="breadcrumb-item active">Visualizar Fórum</li>
         </ol>
       </div>

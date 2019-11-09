@@ -46,7 +46,6 @@ class ForumCommentModel{
       $listComment = [];
 
       foreach($dt as $dr){
-        //f.id, f.fc_content, f.fc_created, f.fc_subid, u.us_name
         $listComment[] = (object)array(
           "id" => $dr['id'],
           "content" => $dr['fc_content'],
