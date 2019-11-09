@@ -17,14 +17,15 @@ class LoginController extends Controller{
     $this->Load("login/login.php");
   }
 
+  public function Headerindex(){
+    echo "<title>Login - Open Task</title>";
+  }
+  
   public function logout(){
     session_destroy();
     redirect(BASE);
   }
 
-  public function indexHeader(){
-    echo "<title>Login - Open Task</title>";
-  }
 
   public function auth(){
     $login    = filter_input(INPUT_POST, "txtUsername", FILTER_SANITIZE_STRING);
