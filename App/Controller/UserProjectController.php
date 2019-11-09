@@ -31,7 +31,7 @@ class UserProjectController extends Controller{
   }
 
   public function Headershow(){
-    echo "<title>Login - User Project</title>";
+    echo "<title>User Project - Open Task</title>";
   }
 
   public function store(){
@@ -72,14 +72,14 @@ class UserProjectController extends Controller{
     ]);
   }
 
-  public function check($projectId = 0){
+  public function Httpcheck($projectId = 0){
     if($projectId <= 0 ){
       echo "Invalid ID";
       return;
     }
 
     if($this->userProjectModel->checkPermission($projectId, $_SESSION['i'])){
-      setcookie("pi", $projectId, null, "/");
+      setcookie("pi", $projectId, (time()+86400), BASE);
       redirect(BASE."project/myproject/");
     }else{
       $this->Load("layout/denied.php");

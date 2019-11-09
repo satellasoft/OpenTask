@@ -31,7 +31,7 @@
 
             </div>
             <div class="card-footer">
-              <a href="<?=BASE?>userproject/check/<?=$project->id;?>" class="w-100 btn btn-<?=$class;?> btn-sm">Acessar</a>
+              <a href="<?=BASE?>userProject/check/<?=$project->id;?>" class="w-100 btn btn-<?=$class;?> btn-sm">Acessar</a>
             </div>
           </div>
         </div>

@@ -88,7 +88,7 @@ class TaskModel{
     }
   }
 
-  public function getAllResumed(int $projectId){
+  public function getAllResumed(int $projectId = 0){
     try{
       $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id WHERE t.project_id = :projectid ORDER BY t.tk_created DESC";
       $param = array(

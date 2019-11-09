@@ -1,3 +1,4 @@
+<?php $this->RunHttp(); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>

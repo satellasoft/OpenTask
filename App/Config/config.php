@@ -22,3 +22,4 @@ define("TIMEZONE", "America/Sao_Paulo");
 define("CONTROLLER", "HomeController");
 define("METHOD", "index");
 define("METHOD_HEADER", "Headerindex");//call inner <head></head>
+define("METHOD_HTTP", "Httpindex");//call befrore <!doctype>
