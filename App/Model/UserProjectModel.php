@@ -113,4 +113,24 @@ class UserProjectModel{
       return false;
     }
   }
+
+  public function getUserProjects($userId){
+    try {
+      $sql = "SELECT project_id as id FROM user_project WHERE user_id = :userid AND up_status = :status";
+      $params = array(
+        ":userid" => $userId,
+        ":status" => 1//active
+      );
+
+      $dt = $this->pdo->ExecuteQuery($sql, $params);
+      $list = [];
+      foreach($dt as $dr){
+        $list[] = $dr['id'];
+      }
+      return $list;
+    }catch(PDOException $ex){
+      echo $ex->getMessage();
+      return null;
+    }
+  }
 }
