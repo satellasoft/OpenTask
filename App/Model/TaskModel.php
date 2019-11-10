@@ -118,9 +118,9 @@ class TaskModel{
 
   public function getAllMonthTask($projectsId, $dtStart, $dtEnd){
     try{
-      $sql = "SELECT t.tk_title, t.tk_created, t.tk_deadline, p.pr_title as projecttile FROM task t INNER JOIN project p ON p.id = t.project_id WHERE t.tk_status = 1 AND p.pr_status = 1 AND p.id in (:projectids) AND t.tk_deadline between :dtstart AND :dtend";
+      $projectsId = filter_var($projectsId, FILTER_SANITIZE_STRING);
+      $sql = "SELECT t.tk_title, t.tk_created, t.tk_deadline, p.pr_title as projecttile FROM task t INNER JOIN project p ON p.id = t.project_id WHERE t.tk_status = 1 AND p.pr_status = 1 AND p.id in ({$projectsId}) AND t.tk_deadline between :dtstart AND :dtend";
       $params = array(
-        ":projectids" => $projectsId,
         ":dtstart"    => $dtStart,
         ":dtend"      => $dtEnd
       );

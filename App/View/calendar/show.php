@@ -40,7 +40,7 @@ function getTasks(){
   var base = valueById('base');
 
   $.ajax({
-    url : base + "Api/index.php?r=1",
+    url : base + "API/index.php?r=1",
     data : obj,
     type : 'POST',
     dataType : "JSON",
