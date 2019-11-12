@@ -9,7 +9,7 @@
         <li><a href="<?=BASE?>">Início</a></li>
         <li><a href="#">Meus projetos</a></li>
         <li><a href="<?=BASE?>calendar/">Calendário</a></li>
-        <li><a href="<?=BASE?>/help">Ajuda</a></li>
+        <li><a href="<?=BASE?>help">Ajuda</a></li>
       </ul>
     </div>
   </div>
