@@ -58,7 +58,7 @@
     </form>
   </div>
 </div>
-<script src="<?=BASE?>ckeditor/ckeditor.js"></script>
+<script src="<?=BASE?>vendor/ckeditor/ckeditor.js"></script>
 <script src="<?=BASE?>js/project.js"></script>
 <script>
 CKEDITOR.replace("txtDescription");

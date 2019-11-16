@@ -75,7 +75,7 @@ class ForumController extends Controller{
 
   public function Headershow(){
     echo "<title>Topic Forum - Open Task</title>";
-    echo "<link rel='stylesheet' href='".BASE."highlight/styles/atom-one-dark.css'>";
+    echo "<link rel='stylesheet' href='".BASE."vendor/highlight/styles/atom-one-dark.css'>";
   }
 
   ///FORUM COMMENT

@@ -81,10 +81,10 @@
   </div>
 </div>
 
-<script src="<?=BASE?>ckeditor/ckeditor.js"></script>
+<script src="<?=BASE?>vendor/ckeditor/ckeditor.js"></script>
 <script src="<?=BASE?>js/forum.js"></script>
 
-<script src="<?=BASE?>/highlight/highlight.pack.js"></script>
+<script src="<?=BASE?>vendor/highlight/highlight.pack.js"></script>
 <script>
 RunHeighLight();
 CKEDITOR.replace("txtContent");

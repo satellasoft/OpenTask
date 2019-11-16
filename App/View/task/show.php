@@ -63,22 +63,59 @@
         <div class="card-body">
           <h4 class="card-title"><?=$f->title?></h4>
           <div>
-              <?=html_entity_decode($f->content);?>
+            <?=html_entity_decode($f->content);?>
           </div>
 
           <a href="<?=BASE?>forum/show/<?=$f->id;?>" class="btn btn-info btn-sm">Visualizar</a>
 
         </div>
       </div>
-    <?php
-  }
-  ?>
+      <?php
+    }
+    ?>
 
-</div>
+    <!--ARQUIVOS-->
+    <div class="card mb-3">
+      <div class="card-header"><span class="font-weight-bold">Arquivos</span></div>
+      <div class="card-body">
+        <div class="overflow-auto">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Arquivo</th>
+                <th>Enviado por</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <hr>
+      </div>
+    </div>
+
+    <!--Imagens-->
+    <div class="card mb-3">
+      <div class="card-header"><span class="font-weight-bold">Imagens</span></div>
+      <div class="card-body">
+        <div class="overflow-auto">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Arquivo</th>
+                <th>Enviado por</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <hr>
+      </div>
+    </div>
+
+    <!--END-->
+  </div>
 </div>
 <script src="<?=BASE?>js/task.js"></script>
 <script src="<?=BASE?>js/forum.js"></script>
-<script src="<?=BASE?>/highlight/highlight.pack.js"></script>
-<script>
-  RunHeighLight();
-</script>
+<script src="<?=BASE?>vendor/highlight/highlight.pack.js"></script>
+<script>RunHeighLight();</script>

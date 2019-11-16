@@ -18,15 +18,15 @@
   </div>
 </div>
 
-<link href='../full-calendar/packages/core/main.css' rel='stylesheet' />
-<link href='../full-calendar/packages/daygrid/main.css' rel='stylesheet' />
-<link href='../full-calendar/packages/timegrid/main.css' rel='stylesheet' />
-<link href='../full-calendar/packages/list/main.css' rel='stylesheet' />
-<script src='../full-calendar/packages/core/main.js'></script>
-<script src='../full-calendar/packages/interaction/main.js'></script>
-<script src='../full-calendar/packages/daygrid/main.js'></script>
-<script src='../full-calendar/packages/timegrid/main.js'></script>
-<script src='../full-calendar/packages/list/main.js'></script>
+<link href='../vendor/full-calendar/packages/core/main.css' rel='stylesheet' />
+<link href='../vendor/full-calendar/packages/daygrid/main.css' rel='stylesheet' />
+<link href='../vendor/full-calendar/packages/timegrid/main.css' rel='stylesheet' />
+<link href='../vendor/full-calendar/packages/list/main.css' rel='stylesheet' />
+<script src='../vendor/full-calendar/packages/core/main.js'></script>
+<script src='../vendor/full-calendar/packages/interaction/main.js'></script>
+<script src='../vendor/full-calendar/packages/daygrid/main.js'></script>
+<script src='../vendor/full-calendar/packages/timegrid/main.js'></script>
+<script src='../vendor/full-calendar/packages/list/main.js'></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
