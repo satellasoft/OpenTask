@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 use App\Core\Controller;
+use App\Core\UploadFile;
 use App\Model\UploadModel;
 use App\Entity\Upload;
 
-use App\Core\uploadFile;
 
 class UploadController extends Controller{
   private $uploadModel;
