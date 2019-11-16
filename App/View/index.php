@@ -25,7 +25,7 @@
       }
       ?>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-md-10 col-xs-12" id="dvTop">
       <?php $this->RunContent(); ?>
     </div>
   </div>

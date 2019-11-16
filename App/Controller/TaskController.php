@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Core\Controller;
 use App\Model\TaskModel;
 use App\Model\ForumModel;
+use App\Model\UploadModel;
 use App\Entity\Task;
 
 class TaskController extends Controller{
@@ -91,7 +92,7 @@ class TaskController extends Controller{
   //SHOW
 
   public function show($id = 0){
-    if($id <= 0){
+    if($id <= 0 || !isset($_SESSION["i"]) || !isset($_COOKIE['pi'])){
       $this->Load("layout/404.php");
       return;
     }
@@ -104,8 +105,10 @@ class TaskController extends Controller{
     }else{
       $this->Load("task/show.php",
       [
-        "task" => $task,
-        "forum" => (new ForumModel())->getAll($id)
+        "task"    => $task,
+        "forum"   => (new ForumModel())->getAll($id),
+        "uploads" => (new UploadModel())->getAllByTaskId($id),
+        "userId"  => $_SESSION["i"]
       ]);
     }
   }

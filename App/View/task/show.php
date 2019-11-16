@@ -14,6 +14,7 @@
 
       <div class="col-md-6">
         <a href="<?=BASE?>forum/create/<?=$task->id?>" class="btn btn-info">Novo fórum</a>
+        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalUpload">Upload</a>
       </div>
     </div>
 
@@ -56,11 +57,16 @@
     <hr>
 
     <?php
+    $i = 0;
     foreach($forum as $f){
+      $i++;
       ?>
       <div class="card mb-3">
-        <div class="card-header"><span class="font-weight-bold">Criado em: </span> <?=convertDate($f->created, DATETIME_FORMAT)?>___<span class="font-weight-bold">Por: </span> <?=$f->userName;?></div>
-        <div class="card-body">
+        <div class="card-header">
+          <a class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapse<?=$i?>" role="button" aria-expanded="true" aria-controls="collapse<?=$i?>">[+]</a>&nbsp;&nbsp;
+          <span class="font-weight-bold">Criado em: </span> <?=convertDate($f->created, DATETIME_FORMAT)?>___<span class="font-weight-bold">Por: </span> <?=$f->userName;?>
+        </div>
+        <div class="card-body" id="collapse<?=$i?>">
           <h4 class="card-title"><?=$f->title?></h4>
           <div>
             <?=html_entity_decode($f->content);?>
@@ -75,7 +81,7 @@
     ?>
 
     <!--ARQUIVOS-->
-    <div class="card mb-3">
+    <div class="card mb-3" id="dvFiles">
       <div class="card-header"><span class="font-weight-bold">Arquivos</span></div>
       <div class="card-body">
         <div class="overflow-auto">
@@ -87,6 +93,33 @@
                 <th>Enviado por</th>
               </tr>
             </thead>
+            <tbody>
+              <?php
+              foreach($uploads as $up){
+                if($up->type == "f"){
+                  $fullDir = BASE . "" . FILE_PATH . "/" . $up->file;
+                  ?>
+                  <tr>
+                    <td><?=$up->title?></td>
+                    <td>
+                      <a href="<?=$fullDir;?>" download class="btn btn-primary btn-sm"><?=$up->file?></a>
+                    </td>
+                    <td>
+                      <?php
+                        echo $up->userName;
+                        if($userId == $up->userId){
+                          ?>
+                          <a href="<?=BASE?>upload/remove/<?=$up->fileId?>/<?=$task->id;?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente remover?');">[X]</a>
+                          <?php
+                        }
+                      ?>
+                    </td>
+                  </tr>
+                  <?php
+                }
+              }
+              ?>
+            </tbody>
           </table>
         </div>
         <hr>
@@ -94,7 +127,7 @@
     </div>
 
     <!--Imagens-->
-    <div class="card mb-3">
+    <div class="card mb-3" id="dvImages">
       <div class="card-header"><span class="font-weight-bold">Imagens</span></div>
       <div class="card-body">
         <div class="overflow-auto">
@@ -106,6 +139,34 @@
                 <th>Enviado por</th>
               </tr>
             </thead>
+            <tbody>
+              <?php
+              foreach($uploads as $up){
+                if($up->type == "i"){
+                  $fullDir = BASE . "" . IMAGE_PATH . "/" . $up->file;
+                  ?>
+                  <tr>
+                    <td><?=$up->title?></td>
+                    <td>
+                      <a href="<?=$fullDir;?>" download class="btn btn-primary btn-sm">Download</a>
+                      <a href="<?=$fullDir;?>" target="_blank" class="btn btn-info btn-sm">Visualizar</a>
+                    </td>
+                    <td>
+                      <?php
+                        echo $up->userName;
+                        if($userId == $up->userId){
+                          ?>
+                          <a href="<?=BASE?>upload/remove/<?=$up->fileId?>/<?=$task->id;?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente remover?');">[X]</a>
+                          <?php
+                        }
+                      ?>
+                    </td>
+                  </tr>
+                  <?php
+                }
+              }
+              ?>
+            </tbody>
           </table>
         </div>
         <hr>
@@ -115,7 +176,54 @@
     <!--END-->
   </div>
 </div>
+
+<div class="text-right mt-3 mb-3">
+  <a href="#dvTop" class="btn btn-secondary btn-sm">Topo</a>
+</div>
+
+<!---MODAL UPLOAD-->
+<div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="frmUpload" action="<?=BASE?>upload/store" method="post" enctype="multipart/form-data" onsubmit="return validateUpload();">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Upload de arquivos</h5>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="txtTaskId" id="txtTaskId" value="<?=$task->id?>">
+          <input type="text" name="txtUploadTitle" id="txtUploadTitle" placeholder="Título" class="form-control">
+
+          <select class="form-control mt-2" name="slType" id="slType">
+            <option value="f">Arquivo</option>
+            <option value="i">Imagem</option>
+          </select>
+
+          <div class="alert alert-dismissible alert-secondary mt-2">
+            <span class="label">Arquivo, Max 50MB - Imagem, Max 1MB</span>
+          </div>
+
+          <div class="custom-file">
+            <input accept=".zip" type="file" class="custom-file-input" id="flFile" name="flFile">
+            <label class="custom-file-label" for="flFile">Escolha o Arquivo</label>
+          </div>
+
+          <div class="alert alert-info mt-2" id="dvAlert">
+            &nbsp;
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-success">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!---END MODAL UPLOAD-->
+
 <script src="<?=BASE?>js/task.js"></script>
 <script src="<?=BASE?>js/forum.js"></script>
+<script src="<?=BASE?>js/upload.js"></script>
 <script src="<?=BASE?>vendor/highlight/highlight.pack.js"></script>
 <script>RunHeighLight();</script>

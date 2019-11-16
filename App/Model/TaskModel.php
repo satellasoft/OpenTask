@@ -36,7 +36,6 @@ class TaskModel{
     }
   }
 
-
   public function update(Task $task){
     try{
       $sql = "UPDATE task SET tk_title = :title, tk_description = :description, tk_deadline = :deadline, tk_status = :status WHERE user_id = :userid AND project_id = :projectid AND id = :id";

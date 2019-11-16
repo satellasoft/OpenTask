@@ -21,6 +21,11 @@ function getCurrentDate(){
   return yyyy + "-" + mm + "-" + dd;
 }
 
+function updateAttribute(el, attr, value){
+  if(el.hasAttribute(attr))
+    el.removeAttribute(attr);
+  el.setAttribute(attr, value);
+}
 
 /*MODAL*/
 
