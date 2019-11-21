@@ -7,7 +7,6 @@
 
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><a class="nav-link" href="#">Meus projetos</a></li>
         <li class="nav-item"><a class="nav-link" href="<?=BASE?>calendar/">Calendário</a></li>
         <li class="nav-item"><a class="nav-link" href="<?=BASE?>help">Ajuda</a></li>
         <li><div class="dropdown-divider"></div></li>
