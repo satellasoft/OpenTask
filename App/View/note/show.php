@@ -26,7 +26,7 @@
     <p>Criado em: <span class="font-weight-bold"><?=convertDate($note->created);?></span>
       Por: <span class="font-weight-bold"><?=$note->username;?></span></p>
 
-      <div class="p-3" style="background-color: #<?=$note->color;?>">
+      <div class="p-3" style="background-color: #<?=$note->color;?>" id="note-format-content">
         <?=html_entity_decode($note->content);?>
       </div>
 

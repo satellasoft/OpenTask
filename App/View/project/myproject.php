@@ -54,41 +54,36 @@
               </tr>
             </thead>
             <tbody>
-              <?php
-              foreach($listTask as $task){
+              <?php foreach($listTask as $task) :
+                $status = "Finalizado";
+                $color  = "text-info";
+
+                if($task->status == 1){
+                  $status = "Ativo";
+                  $color  = "text-success";
+                }elseif($task->status == 2){
+                  $status = "Cancelado";
+                  $color  = "text-danger";
+                }
                 ?>
                 <tr>
                   <td><?=$task->title;?></td>
                   <td><?=convertDate($task->created, DATE_FORMAT);?></td>
                   <td><?=convertDate($task->deadline, DATETIME_FORMAT);?></td>
-                  <td><?=$task->status == 1 ? "Ativo" : "Bloqueado";?></td>
+                  <td class="<?=$color;?> font-weight-bold"><?=$status;?></td>
                   <td><?=$task->username;?></td>
-                  <td>
-                    <a href="<?=BASE?>task/show/<?=$task->id;?>" class="btn btn-info btn-sm">Visualizar</a>
-                    </td>
+                  <td><a href="<?=BASE?>task/show/<?=$task->id;?>" class="btn btn-info btn-sm">Visualizar</a></td>
                 </tr>
-                <?php
-              }
-              ?>
+              <?php endforeach;?>
             </tbody>
-            <!--
-            "id" => $dr["id"],
-            "title" => $dr["tk_title"],
-            "deadline" => $dr["tk_deadline"],
-            "status" => $dr["tk_status"],
-            "created" => $dr["tk_created"],
-            "username" => $dr["us_name"]
-          -->
         </table>
       </div>
     </div>
   </div>
-
-
 </div>
 </div>
+
 <!--MODAL DESCRIPTION-->
-
 <div class="modal fade" id="modalDescription" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

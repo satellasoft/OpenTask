@@ -97,3 +97,17 @@ body{
   border-top: 2px solid #eee;
   padding: 10px;
 }
+
+#note-format-content a{
+  background-color: #FFF;
+  border-radius: 10px;
+  padding:5px;
+  color: #2078c9;
+}
+
+#note-format-content a:hover{
+  background-color: #2078c9;
+  border-radius: 10px;
+  padding:5px;
+  color: #FFF;
+}
