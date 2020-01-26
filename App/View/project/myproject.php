@@ -45,6 +45,7 @@
           <table class="table table-hover table-striped">
             <thead>
               <tr>
+                <th>#ID</th>
                 <th>Title</th>
                 <th>Criado</th>
                 <th>Deadline</th>
@@ -67,6 +68,7 @@
                 }
                 ?>
                 <tr>
+                  <td class="font-weight-bold">#<?=$task->id;?></td>
                   <td><?=$task->title;?></td>
                   <td><?=convertDate($task->created, DATE_FORMAT);?></td>
                   <td><?=convertDate($task->deadline, DATETIME_FORMAT);?></td>
