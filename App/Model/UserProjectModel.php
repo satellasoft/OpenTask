@@ -133,4 +133,28 @@ class UserProjectModel{
       return null;
     }
   }
+
+  public function getAllByProject($projectid = 0){
+    try{
+      $sql = "SELECT u.us_name, u.us_last_login, up.up_position, up.up_status FROM user u INNER JOIN user_project up ON up.user_id = u.id WHERE up.project_id = :projectid";
+      $param = [":projectid" => $projectid];
+
+      $dt = $this->pdo->ExecuteQuery($sql, $param);
+      $list = [];
+
+      foreach($dt as $dr){
+        $list[] = (object)[
+          "name" => $dr["us_name"] ?? null,
+          "lastLogin" => $dr["us_last_login"] ?? null,
+          "position" => $dr["up_position"] ?? null,
+          "status" => $dr["up_status"]  ?? null
+        ];
+      }
+
+      return $list;
+    }catch(PDOException $ex){
+      echo $ex->getMessage();
+      return null;
+    }
+  }
 }

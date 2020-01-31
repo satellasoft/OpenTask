@@ -17,26 +17,61 @@
       </div>
     </div>
 
-    <h4>Notas</h4>
     <div class="row">
-      <?php
-      foreach($listNote as $note){
-        ?>
-        <div class="col-md-3 col-sm-6 no-padding">
-          <div class="postit" onclick="redirect('<?=BASE?>note/show/<?=$note->id;?>');">
-            <div class="postit-header">
-              <img src="<?=BASE?>img/push-pin.png" alt="Push pin">
+      <div class="col-md-6 col-sm-12">
+        <h4>Notas</h4>
+        <div class="row">
+          <?php
+          foreach($listNote as $note){
+            ?>
+            <div class="col-md-4 col-sm-4 no-padding">
+              <div class="postit" onclick="redirect('<?=BASE?>note/show/<?=$note->id;?>');">
+                <div class="postit-header">
+                  <img src="<?=BASE?>img/push-pin.png" alt="Push pin">
+                </div>
+                <div class="postit-body" style="background-color: #<?=$note->color;?>;">
+                  <?=$note->title;?>
+                </div>
+              </div>
             </div>
-            <div class="postit-body" style="background-color: #<?=$note->color;?>;">
-              <?=$note->title;?>
-            </div>
+            <?php
+          }
+          ?>
+          <div class="clear"></div>
+          <div class="text-right">
+            <p><a href="<?=BASE?>note/" class="btn btn-secondary btn-sm mobile-full-width">Mostrar todas</a></p>
           </div>
         </div>
-        <?php
-      }
-      ?>
+      </div>
+
+      <div class="col-md-6 col-sm-12">
+        <h4>Membros</h4>
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Função</th>
+              <th>Último login</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <?php foreach($members as $m): ?>
+              <tr class="<?=$m->status == 2 ? "table-danger" : "";?>">
+                <td><?=$m->name;?></td>
+                <td><?=$m->position;?></td>
+                <td>
+                <?php
+                  if($m->lastLogin != "0000-00-00 00:00:00"){
+                  echo convertDate($m->lastLogin, DATETIME_FORMAT);
+                  }
+                ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <p class="text-right"><a href="<?=BASE?>note/" class="btn btn-secondary btn-sm mobile-full-width">Mostrar todas >>></a></p>
 
     <h4>Tarefas</h4>
     <div class="row">
@@ -78,11 +113,11 @@
                 </tr>
               <?php endforeach;?>
             </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 
 <!--MODAL DESCRIPTION-->

@@ -20,7 +20,7 @@ class LoginController extends Controller{
   public function Headerindex(){
     echo "<title>Login - Open Task</title>";
   }
-  
+
   public function logout(){
     session_destroy();
     redirect(BASE);
@@ -40,11 +40,13 @@ class LoginController extends Controller{
 
       $hash = $userModel->getPasswaordHash($login);
       if(password_verify($password, $hash)){
-        $user =$userModel->getResumeLogin($login);
+        $user = $userModel->getResumeLogin($login);
         $_SESSION["i"] = $user->id;
         $_SESSION["p"] = $user->permission;
 
         $name = explode(" ", $user->name);
+
+        $userModel->updateLastLogin($user->id);
         $_SESSION["n"] = $name[0];
         redirect(BASE);
       }else{

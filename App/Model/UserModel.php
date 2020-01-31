@@ -123,7 +123,7 @@ class UserModel{
       );
 
       $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
-      return $dr["us_password"];
+      return $dr["us_password"] ?? null;
     }catch(PDOException $ex){
       echo $ex->getMessage();
       return null;
@@ -171,6 +171,21 @@ class UserModel{
     }catch(PDOException $ex){
       echo $ex->getMessage();
       return null;
+    }
+  }
+
+  public function updateLastLogin(int $userId){
+    try{
+      $sql = "UPDATE user set us_last_login = :date WHERE id = :id";
+      $params = [
+        ":date" => getCurrentDate(),
+        ":id"   => $userId
+      ];
+
+      return $this->pdo->ExecuteNonQuery($sql, $params);
+    }catch(PDOException $ex){
+      echo $ex->getMessage();
+      return false;
     }
   }
 }

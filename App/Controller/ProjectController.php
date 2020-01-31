@@ -125,13 +125,14 @@ class ProjectController extends Controller{
 
     public function myProject(){
       $project = $this->projectModel->getById($_COOKIE['pi']);
-      $notes = (new \App\Model\NoteModel())->getAllResumed($_COOKIE['pi']);
+      $notes = (new \App\Model\NoteModel())->getAllResumed($_COOKIE['pi'], 3);
       $task = (new \App\Model\TaskModel())->getAllResumed($_COOKIE['pi']);
       $this->Load("project/myproject.php",
       [
         "project"  => $project,
         "listNote" => $notes,
-        "listTask" => $task
+        "listTask" => $task,
+        "members" => (new \App\Model\UserProjectModel())->getAllByProject($_COOKIE['pi'])
       ]);
     }
 
