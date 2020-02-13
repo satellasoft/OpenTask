@@ -1,0 +1,6 @@
+User
+us_permission: 1 = admin | 2 = comum
+us_status: : 1 = ativo | 2 = bloqueado
+
+Project
+pr_status: 1 = Ativo | 2= Cancelado | 3 = Finalizado 

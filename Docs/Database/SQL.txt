@@ -1,0 +1,207 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema opentask
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema opentask
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `opentask` DEFAULT CHARACTER SET utf8 ;
+USE `opentask` ;
+
+-- -----------------------------------------------------
+-- Table `opentask`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `opentask`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `us_name` VARCHAR(100) NOT NULL,
+  `us_email` VARCHAR(100) NOT NULL,
+  `us_login` VARCHAR(30) NOT NULL,
+  `us_password` VARCHAR(100) NOT NULL,
+  `us_permission` INT(1) NOT NULL DEFAULT 2 COMMENT '1 = Admin | 2 Comum',
+  `us_status` INT(1) NOT NULL DEFAULT 1 COMMENT '1 = Active | 2 = Block',
+  `us_register` DATETIME NOT NULL,
+  `us_last_login` DATETIME NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opentask`.`project`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `opentask`.`project` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `pr_title` VARCHAR(150) NOT NULL,
+  `pr_description` TEXT NOT NULL,
+  `pr_deadline` DATETIME NULL,
+  `pr_created` DATETIME NOT NULL DEFAULT now(),
+  `pr_status` INT(1) NOT NULL COMMENT '1 = active | 2 = cancel | 3 = finish',
+  `user_id` INT NOT NULL COMMENT 'who created?',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opentask`.`task`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `opentask`.`task` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `tk_title` VARCHAR(100) NOT NULL,
+  `tk_description` TEXT NOT NULL,
+  `tk_deadline` DATETIME NOT NULL,
+  `tk_status` SMALLINT(1) NOT NULL DEFAULT 1 COMMENT '1 = Active',
+  `tk_created` DATETIME NOT NULL,
+  `user_id` INT NOT NULL,
+  `project_id` INT NOT NULL COMMENT 'who created?',
+  PRIMARY KEY (`id`),
+  INDEX `fk_task_user1_idx` (`user_id` ASC),
+  INDEX `fk_task_project1_idx` (`project_id` ASC),
+  CONSTRAINT `fk_task_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `opentask`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_task_project1`
+    FOREIGN KEY (`project_id`)
+    REFERENCES `opentask`.`project` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opentask`.`file`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `opentask`.`file` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `fl_title` VARCHAR(100) NOT NULL,
+  `fl_file` VARCHAR(150) NOT NULL,
+  `fl_type` VARCHAR(1) NOT NULL DEFAULT 1 COMMENT 'i = img | f = file',
+  `task_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_file_task1_idx` (`task_id` ASC),
+  INDEX `fk_file_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_file_task1`
+    FOREIGN KEY (`task_id`)
+    REFERENCES `opentask`.`task` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_file_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `opentask`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opentask`.`forum`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `opentask`.`forum` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `fr_title` VARCHAR(100) NOT NULL,
+  `fr_content` TEXT NOT NULL,
+  `fr_created` DATETIME NOT NULL,
+  `task_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_forum_task1_idx` (`task_id` ASC),
+  INDEX `fk_forum_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_forum_task1`
+    FOREIGN KEY (`task_id`)
+    REFERENCES `opentask`.`task` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_forum_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `opentask`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opentask`.`forum_comment`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `opentask`.`forum_comment` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `fc_content` TEXT NOT NULL,
+  `fc_created` DATETIME NOT NULL,
+  `fc_subid` INT NULL,
+  `forum_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_forum_comment_forum1_idx` (`forum_id` ASC),
+  INDEX `fk_forum_comment_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_forum_comment_forum1`
+    FOREIGN KEY (`forum_id`)
+    REFERENCES `opentask`.`forum` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_forum_comment_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `opentask`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opentask`.`user_project`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `opentask`.`user_project` (
+  `user_id` INT NOT NULL,
+  `project_id` INT NOT NULL,
+  `up_position` VARCHAR(50) NULL,
+  `up_status` INT(1) NOT NULL DEFAULT 1 COMMENT '1 = Active | 2 = Denied',
+  PRIMARY KEY (`user_id`, `project_id`),
+  INDEX `fk_user_has_project_project1_idx` (`project_id` ASC),
+  INDEX `fk_user_has_project_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_user_has_project_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `opentask`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_has_project_project1`
+    FOREIGN KEY (`project_id`)
+    REFERENCES `opentask`.`project` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opentask`.`note`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `opentask`.`note` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nt_title` VARCHAR(100) NOT NULL,
+  `nt_created` DATETIME NOT NULL,
+  `nt_content` TEXT NOT NULL,
+  `nt_color` VARCHAR(10) NOT NULL DEFAULT 'CCC',
+  `nt_status` INT(1) NOT NULL DEFAULT 1 COMMENT '1 == active',
+  `project_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_note_project1_idx` (`project_id` ASC),
+  INDEX `fk_note_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_note_project1`
+    FOREIGN KEY (`project_id`)
+    REFERENCES `opentask`.`project` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_note_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `opentask`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
