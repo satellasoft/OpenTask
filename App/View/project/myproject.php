@@ -14,65 +14,35 @@
         <button type="button" class="btn btn-primary mobile-full-width mb-2" data-toggle="modal" data-target="#modalDescription">Detalhes do projeto</button>
         <a href="<?=BASE?>note/create/" class="btn btn-info mobile-full-width mb-2">Nova Nota</a>
         <a href="<?=BASE?>task/create/" class="btn btn-info mobile-full-width mb-2">Nova Tarefa</a>
+        <a href="#" data-toggle="modal" data-target="#modalMember"class="btn btn-info mobile-full-width mb-2">Membros</a>
       </div>
     </div>
 
+    <h4>Notas</h4>
     <div class="row">
-      <div class="col-md-6 col-sm-12">
-        <h4>Notas</h4>
-        <div class="row">
-          <?php
-          foreach($listNote as $note){
-            ?>
-            <div class="col-md-4 col-sm-4 no-padding">
-              <div class="postit" onclick="redirect('<?=BASE?>note/show/<?=$note->id;?>');">
-                <div class="postit-header">
-                  <img src="<?=BASE?>img/push-pin.png" alt="Push pin">
-                </div>
-                <div class="postit-body" style="background-color: #<?=$note->color;?>;">
-                  <?=$note->title;?>
-                </div>
-              </div>
+      <?php
+      foreach($listNote as $note){
+        ?>
+        <div class="col-md-2 col-sm-4 no-padding">
+          <div class="postit" onclick="redirect('<?=BASE?>note/show/<?=$note->id;?>');">
+            <div class="postit-header">
+              <img src="<?=BASE?>img/push-pin.png" alt="Push pin">
             </div>
-            <?php
-          }
-          ?>
-          <div class="clear"></div>
-          <div class="text-right">
-            <p><a href="<?=BASE?>note/" class="btn btn-secondary btn-sm mobile-full-width">Mostrar todas</a></p>
+            <div class="postit-body" style="background-color: #<?=$note->color;?>;">
+              <?=$note->title;?>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="col-md-6 col-sm-12">
-        <h4>Membros</h4>
-        <table class="table table-hover table-striped">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Função</th>
-              <th>Último login</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <?php foreach($members as $m): ?>
-              <tr class="<?=$m->status == 2 ? "table-danger" : "";?>">
-                <td><?=$m->name;?></td>
-                <td><?=$m->position;?></td>
-                <td>
-                <?php
-                  if($m->lastLogin != "0000-00-00 00:00:00"){
-                  echo convertDate($m->lastLogin, DATETIME_FORMAT);
-                  }
-                ?></td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-      </div>
+        <?php
+      }
+      ?>
+    </div>
+    <div class="clear"></div>
+    <div class="text-right">
+      <p><a href="<?=BASE?>note/" class="btn btn-secondary btn-sm mobile-full-width">Mostrar todas</a></p>
     </div>
 
+    <hr>
     <h4>Tarefas</h4>
     <div class="row">
       <div class="col">
@@ -119,6 +89,52 @@
     </div>
   </div>
 </div>
+
+<!--MODAL MEMBROS-->
+<div class="modal fade" id="modalMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Membros</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Função</th>
+              <th>Último login</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <?php foreach($members as $m): ?>
+              <tr class="<?=$m->status == 2 ? "table-danger" : "";?>">
+                <td><?=$m->name;?></td>
+                <td><?=$m->position;?></td>
+                <td>
+                  <?php
+                  if($m->lastLogin != "0000-00-00 00:00:00"){
+                    echo convertDate($m->lastLogin, DATETIME_FORMAT);
+                  }
+                  ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--FIM MODAL MEMBROS-->
+
 
 <!--MODAL DESCRIPTION-->
 <div class="modal fade" id="modalDescription" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
