@@ -24,12 +24,10 @@
       foreach($listNote as $note){
         ?>
         <div class="col-md-2 col-sm-4 no-padding">
-          <div class="postit" onclick="redirect('<?=BASE?>note/show/<?=$note->id;?>');">
-            <div class="postit-header">
-              <img src="<?=BASE?>img/push-pin.png" alt="Push pin">
-            </div>
-            <div class="postit-body" style="background-color: #<?=$note->color;?>;">
-              <?=$note->title;?>
+          <div class="card" style="border:2px solid #<?=$note->color;?>;">
+            <div class="card-header font-weight-bold"><?=mb_substr($note->title, 0, 20);?></div>
+            <div class="card-body" style="border-top:1px solid #<?=$note->color;?>;">
+              <a href="<?=BASE?>note/show/<?=$note->id;?>" class="btn w-100" style="background-color: #<?=$note->color;?>; color: #FFF;">Acessar</a>
             </div>
           </div>
         </div>
