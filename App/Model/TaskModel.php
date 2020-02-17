@@ -38,7 +38,7 @@ class TaskModel{
 
   public function update(Task $task){
     try{
-      $sql = "UPDATE task SET tk_title = :title, tk_description = :description,tk_completed = :completed, tk_deadline = :deadline, tk_status = :status WHERE user_id = :userid AND project_id = :projectid AND id = :id AND tk_completed = null";
+      $sql = "UPDATE task SET tk_title = :title, tk_description = :description,tk_completed = :completed, tk_deadline = :deadline, tk_status = :status WHERE user_id = :userid AND project_id = :projectid AND id = :id";
 
       $params = array(
         ":id"          => $task->getId(),
