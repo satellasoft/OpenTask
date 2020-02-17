@@ -18,17 +18,17 @@
         <div class="col-md-4">
           <label for="txtTitle">Título</label>
           <input type="hidden" name="txtId" id="txtId" value="<?=$task->id;?>">
-          <input type="text" name="txtTitle" id="txtTitle" class="form-control" placeholder="Project title" value="<?=$task->title;?>">
+          <input type="text" name="txtTitle" id="txtTitle" class="form-control" placeholder="Project title" value="<?=$task->title;?>" <?=!$editable ? "disabled" : ""?>>
         </div>
 
         <div class="col-md-4">
           <label for="txtDeadline">Deadline</label>
-          <input type="datetime-local" name="txtDeadline" id="txtDeadline" class="form-control" value="<?=convertDate($task->deadline, "Y-m-d\TH:i:s");?>">
+          <input type="datetime-local" name="txtDeadline" id="txtDeadline" class="form-control" value="<?=convertDate($task->deadline, "Y-m-d\TH:i:s");?>" <?=!$editable ? "disabled" : ""?>>
         </div>
 
         <div class="col-md-4">
           <label for="slStatus">Status</label>
-          <select class="form-control" name="slStatus" id="slStatus">
+          <select class="form-control" name="slStatus" id="slStatus" <?=!$editable ? "disabled" : ""?>>
             <option value="1" <?=$task->status == 1 ? "selected" : "";?> class="text-success">Ativo</option>
             <option value="2" <?=$task->status == 2 ? "selected" : "";?> class="text-danger">Cancelado</option>
             <option value="3" <?=$task->status == 3 ? "selected" : "";?> class="text-info">Finalizado</option>
@@ -38,7 +38,7 @@
 
       <div class="row mt-3">
         <div class="col">
-          <textarea name="txtDescription" id="txtDescription"><?=$task->description;?></textarea>
+          <textarea name="txtDescription" id="txtDescription" <?=!$editable ? "disabled" : ""?>><?=$task->description;?></textarea>
         </div>
       </div>
 
@@ -52,7 +52,7 @@
         </div>
 
         <div class="col-md-6 ">
-          <button type="submit" name="btnEdit" class="btn btn-success">Editar</button>
+          <button type="submit" name="btnEdit" class="btn btn-success" <?=!$editable ? "disabled" : ""?>>Editar</button>
         </div>
       </div>
     </form>

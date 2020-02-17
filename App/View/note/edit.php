@@ -24,7 +24,7 @@
         <div class="col-md-2">
           <label for="slColor">Cor de fundo<?=$note->color?></label>
           <select class="form-control" name="slColor" id="slColor">
-            <option <?= $note->color == "d1d1d1" ? "selected" : ""?> value="d1d1d1" style="background-color: #d1d1d1;">Cinza</option>
+            <option <?= $note->color == "b5b5b5" ? "selected" : ""?> value="b5b5b5" style="background-color: #b5b5b5;">Cinza</option>
             <option <?= $note->color == "e06565" ? "selected" : ""?> value="e06565" style="background-color: #e06565;">Vermelho</option>
             <option <?= $note->color == "e09a65" ? "selected" : ""?> value="e09a65" style="background-color: #e09a65;">Laranja</option>
             <option <?= $note->color == "e0d265" ? "selected" : ""?> value="e0d265" style="background-color: #e0d265;">amarelo</option>

@@ -13,8 +13,10 @@
       </div>
 
       <div class="col-md-6">
-        <a href="<?=BASE?>forum/create/<?=$task->id?>" class="btn btn-info">Novo fórum</a>
-        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalUpload">Upload</a>
+        <?php if( $task->completed == null): ?>
+          <a href="<?=BASE?>forum/create/<?=$task->id?>" class="btn btn-info">Novo fórum</a>
+          <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalUpload">Upload</a>
+        <?php endif; ?>
       </div>
     </div>
 
@@ -27,20 +29,22 @@
           <table class="table text-white">
             <thead>
               <tr>
-                <th>Deadline</span></th>
-                <th>Status</th>
                 <th>Criado</th>
+                <th>Deadline</th>
+                <th>Finalizado</th>
+                <th>Status</th>
                 <th>Autor</th>
-                <th>Opções</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <tr class="table-info">
-                <td><?=convertDate($task->deadline, DATE_FORMAT)?></td>
-                <td><?=$task->status == 1 ? "Ativo" : "Finalizado";?></td>
                 <td><?=convertDate($task->created, DATETIME_FORMAT)?></td>
+                <td><?=convertDate($task->deadline, DATE_FORMAT)?></td>
+                <td><?=$task->completed != null ? convertDate($task->completed, DATETIME_FORMAT) : "Em aberto"?></td>
+                <td><?=$task->status == 1 ? "Ativo" : "Finalizado";?></td>
                 <td><?=$task->username;?></td>
-                <td><?php if($task->userid == $_SESSION['i']){ ?>
+                <td><?php if($task->userid == $_SESSION['i'] && $task->completed == null){ ?>
                   <a href="<?=BASE?>task/edit/<?=$task->id;?>" class="btn btn-primary btn-sm">Editar</a>
                 <?php }else{ echo "---"; } ?></td>
               </tr>
@@ -106,12 +110,12 @@
                     </td>
                     <td>
                       <?php
-                        echo $up->userName;
-                        if($userId == $up->userId){
-                          ?>
-                          <a href="<?=BASE?>upload/remove/<?=$up->fileId?>/<?=$task->id;?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente remover?');">[X]</a>
-                          <?php
-                        }
+                      echo $up->userName;
+                      if($userId == $up->userId){
+                        ?>
+                        <a href="<?=BASE?>upload/remove/<?=$up->fileId?>/<?=$task->id;?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente remover?');">[X]</a>
+                        <?php
+                      }
                       ?>
                     </td>
                   </tr>
@@ -153,12 +157,12 @@
                     </td>
                     <td>
                       <?php
-                        echo $up->userName;
-                        if($userId == $up->userId){
-                          ?>
-                          <a href="<?=BASE?>upload/remove/<?=$up->fileId?>/<?=$task->id;?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente remover?');">[X]</a>
-                          <?php
-                        }
+                      echo $up->userName;
+                      if($userId == $up->userId){
+                        ?>
+                        <a href="<?=BASE?>upload/remove/<?=$up->fileId?>/<?=$task->id;?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente remover?');">[X]</a>
+                        <?php
+                      }
                       ?>
                     </td>
                   </tr>

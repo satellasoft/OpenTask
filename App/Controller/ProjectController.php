@@ -124,6 +124,13 @@ class ProjectController extends Controller{
     }
 
     public function myProject(){
+      if(!isset($_COOKIE['pi'])){
+        $this->Load("message/nolink.php", [
+          "title"   => "<span class='text-danger'>Projeto inválido</span>",
+          "message" => "<span class='text-danger'>Nenhum projeto selecionado</span>"
+        ]);
+        return;
+      }
       $project = $this->projectModel->getById($_COOKIE['pi']);
       $notes = (new \App\Model\NoteModel())->getAllResumed($_COOKIE['pi'], 6);
       $task = (new \App\Model\TaskModel())->getAllResumed($_COOKIE['pi']);

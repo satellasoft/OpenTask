@@ -38,13 +38,14 @@ class TaskModel{
 
   public function update(Task $task){
     try{
-      $sql = "UPDATE task SET tk_title = :title, tk_description = :description, tk_deadline = :deadline, tk_status = :status WHERE user_id = :userid AND project_id = :projectid AND id = :id";
+      $sql = "UPDATE task SET tk_title = :title, tk_description = :description,tk_completed = :completed, tk_deadline = :deadline, tk_status = :status WHERE user_id = :userid AND project_id = :projectid AND id = :id AND tk_completed == null";
 
       $params = array(
         ":id"          => $task->getId(),
         ":title"       => $task->getTitle(),
         ":description" => $task->getDescription(),
         ":deadline"    => $task->getDeadline(),
+        ":completed"    => $task->getCompleted(),
         ":status"      => $task->getStatus(),
         ":userid"      => $task->getUser()->getId(),
         ":projectid"   => $task->getProject()->getId()
@@ -64,7 +65,7 @@ class TaskModel{
 
   public function getById(int $taskId, int $projectId){
     try{
-      $sql = "SELECT t.tk_title, t.tk_description, t.tk_deadline, t.tk_status, t.tk_created, u.us_name, u.id as userid FROM task t INNER JOIN user u ON u.id = t.user_id WHERE t.project_id = :projectid AND t.id = :taskid";
+      $sql = "SELECT t.tk_title, t.tk_description, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, u.us_name, u.id as userid FROM task t INNER JOIN user u ON u.id = t.user_id WHERE t.project_id = :projectid AND t.id = :taskid";
       $params = array(
         ":projectid" => $projectId,
         ":taskid" => $taskId
@@ -78,6 +79,7 @@ class TaskModel{
         "deadline" => $dr["tk_deadline"],
         "status" => $dr["tk_status"],
         "created" => $dr["tk_created"],
+        "completed" => $dr["tk_completed"],
         "userid" => $dr["userid"],
         "username" => $dr["us_name"],
       ];
@@ -89,7 +91,7 @@ class TaskModel{
 
   public function getAllResumed(int $projectId = 0){
     try{
-      $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id WHERE t.project_id = :projectid ORDER BY t.tk_created DESC";
+      $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id WHERE t.project_id = :projectid ORDER BY t.tk_created DESC";
       $param = array(
         ":projectid" => $projectId
       );
@@ -104,6 +106,7 @@ class TaskModel{
           "deadline" => $dr["tk_deadline"],
           "status" => $dr["tk_status"],
           "created" => $dr["tk_created"],
+          "completed" => $dr["tk_completed"],
           "username" => $dr["us_name"]
         ];
       }

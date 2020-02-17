@@ -10,6 +10,7 @@ class Task{
 	private $description;
 	private $deadline;
 	private $created;
+	private $completed;
 	private $status;
 	private $user;
 	private $project;
@@ -37,6 +38,10 @@ class Task{
 
 	public function setCreated($created){
 		$this->created = $created;
+	}
+
+	public function setCompleted($completed){
+		$this->completed = $completed;
 	}
 
 	public function setStatus($status){
@@ -69,6 +74,10 @@ class Task{
 
 	public function getCreated(){
 		return $this->created;
+	}
+
+	public function getCompleted(){
+		return $this->completed;
 	}
 
 	public function getStatus(){

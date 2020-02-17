@@ -52,6 +52,7 @@
                 <th>Title</th>
                 <th>Criado</th>
                 <th>Deadline</th>
+                <th>Finalizado</th>
                 <th>Status</th>
                 <th>Autor</th>
                 <th></th>
@@ -75,6 +76,7 @@
                   <td><?=$task->title;?></td>
                   <td><?=convertDate($task->created, DATE_FORMAT);?></td>
                   <td><?=convertDate($task->deadline, DATETIME_FORMAT);?></td>
+                  <td><?=$task->completed != null ? convertDate($task->deadline, DATETIME_FORMAT) : "Em aberto"?></td>
                   <td class="<?=$color;?> font-weight-bold"><?=$status;?></td>
                   <td><?=$task->username;?></td>
                   <td><a href="<?=BASE?>task/show/<?=$task->id;?>" class="btn btn-info btn-sm">Visualizar</a></td>

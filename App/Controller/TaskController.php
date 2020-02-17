@@ -50,7 +50,7 @@ class TaskController extends Controller{
 
   //UPDATE
   public function edit($id = 0){
-    if($id < 0){
+    if($id < 0 || !isset($_COOKIE['pi'])){
       $this->notFound();
       return;
     }
@@ -62,7 +62,12 @@ class TaskController extends Controller{
       return;
     }
 
-    $this->Load("task/edit.php", ["task" => $task]);
+    $editable = $task->completed == null;
+
+    $this->Load("task/edit.php", [
+      "task" => $task,
+      "editable" => $editable
+    ]);
   }
 
   public function Headeredit(){
@@ -77,6 +82,11 @@ class TaskController extends Controller{
     $task->setDescription(filter_input(INPUT_POST, "txtDescription", FILTER_SANITIZE_SPECIAL_CHARS));
     $task->setDeadline(filter_input(INPUT_POST, "txtDeadline", FILTER_SANITIZE_STRING));
     $task->setStatus(filter_input(INPUT_POST, "slStatus", FILTER_SANITIZE_NUMBER_INT));
+
+    if($task->getStatus() == 3){
+      $task->setCompleted(getCurrentDate());
+    }
+
     $task->getUser()->setId($_SESSION["i"]);
     $task->getProject()->setId($_COOKIE['pi']);
 
@@ -87,9 +97,6 @@ class TaskController extends Controller{
     else
     $this->Load("task/result.php", ["message" => "Houve um erro ao tentar cadastrar"]);
   }
-
-
-  //SHOW
 
   public function show($id = 0){
     if($id <= 0 || !isset($_SESSION["i"]) || !isset($_COOKIE['pi'])){
