@@ -37,6 +37,10 @@ class CategoryController extends Controller{
     ]);
   }
 
+  public function headershow(){
+    echo "<title>Categorias - Open Task</title>";
+  }
+
   public function create($projectId  = 0){
     $projectId = filter_var($projectId, FILTER_SANITIZE_NUMBER_INT);
 
@@ -50,6 +54,10 @@ class CategoryController extends Controller{
     ]);
   }
 
+  public function headercreate(){
+    echo "<title>Nova Categoria - Open Task</title>";
+  }
+
   public function edit($categoryId = 0){
     $categoryId = filter_var($categoryId, FILTER_SANITIZE_NUMBER_INT);
 
@@ -61,6 +69,10 @@ class CategoryController extends Controller{
     $this->Load("category/edit.php", [
       "category" => $this->categoryModel->getById($categoryId)
     ]);
+  }
+
+  public function headeredit(){
+    echo "<title>Editar Categoria - Open Task</title>";
   }
 
   public function store(){
