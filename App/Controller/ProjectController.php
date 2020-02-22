@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Core\Controller;
 use App\Model\ProjectModel;
+use App\Model\CategoryModel;
 use App\Entity\Project;
 
 class ProjectController extends Controller{
@@ -93,10 +94,12 @@ class ProjectController extends Controller{
     $project->setId(filter_input(INPUT_POST, "txtId", FILTER_SANITIZE_NUMBER_INT));
 
     $msg = "";
-    if($this->projectModel->update($project))
+    if($this->projectModel->update($project)){
       $msg = "<span class='text-success'>Projeto editado</span>";
-    else
+    }
+    else{
       $msg = "<span class='text-danger'>Houve um erro ao tentar editar o projeto</span>";
+    }
 
     $this->Load("project/result.php", ["message" => $msg]);
   }
@@ -123,6 +126,9 @@ class ProjectController extends Controller{
     }
 
     public function myProject(){
+
+      $categoryId = filter_input(INPUT_POST, "slCategoryId", FILTER_SANITIZE_NUMBER_INT);
+
       if(!isset($_COOKIE['pi'])){
         $this->Load("message/nolink.php", [
           "title"   => "<span class='text-danger'>Projeto inválido</span>",
@@ -130,15 +136,25 @@ class ProjectController extends Controller{
         ]);
         return;
       }
+
+
       $project = $this->projectModel->getById($_COOKIE['pi']);
       $notes = (new \App\Model\NoteModel())->getAllResumed($_COOKIE['pi'], 6);
-      $task = (new \App\Model\TaskModel())->getAllResumed($_COOKIE['pi'], 10);
+
+      if($categoryId <= 0){
+        $task = (new \App\Model\TaskModel())->getAllResumed($_COOKIE['pi'], 10);
+      }else{
+        $task = (new \App\Model\TaskModel())->getAllByCategoryId($_COOKIE['pi'], $categoryId);
+      }
+
       $this->Load("project/myproject.php",
       [
         "project"  => $project,
         "listNote" => $notes,
         "listTask" => $task,
-        "members" => (new \App\Model\UserProjectModel())->getAllByProject($_COOKIE['pi'])
+        "members" => (new \App\Model\UserProjectModel())->getAllByProject($_COOKIE['pi']),
+        "categoryList" => (new CategoryModel())->getAllByProjectId($_COOKIE['pi']),
+        "categoryId"  => $categoryId
       ]);
     }
 

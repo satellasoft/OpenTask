@@ -26,7 +26,7 @@
         </div>
 
         <div class="col-md-3">
-          <label for="slStatus">Categoria</label>
+          <label for="slCategory">Categoria</label>
           <select class="form-control" name="slCategory" id="slCategory">
             <?php foreach($categoryList as $category) :?>
               <option value="<?=$category->id?>" class="text-info"><?=$category->name?></option>

@@ -41,6 +41,21 @@
     </div>
 
     <hr>
+    <div class="row">
+      <div class="col-md-3">
+        <form method="post" id="frmSelectCategory">
+          <label for="slCategory">Selecione Categoria</label>
+          <select class="form-control" name="slCategoryId" id="slCategoryId" onchange="submitForm();">
+            <option value="">Selecione</option>
+            <?php foreach($categoryList as $category) :?>
+              <option value="<?=$category->id?>" class="text-info" <?=$categoryId == $category->id ? "selected" : ""?>><?=$category->name?></option>
+            <?php endforeach;?>
+          </select>
+        </form>
+      </div>
+    </div>
+    <hr>
+
     <h4>Tarefas</h4>
     <div class="row">
       <div class="col">
@@ -166,3 +181,8 @@
   </div>
 </div>
 </div>
+<script>
+  function submitForm(){
+    document.getElementById("frmSelectCategory").submit();
+  }
+</script>

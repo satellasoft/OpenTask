@@ -93,12 +93,43 @@ class TaskModel{
     }
   }
 
-  public function getAllResumed(int $projectId = 0, $limit = 2){
+  public function getAllResumed(int $projectId = 0, $limit = 20){
     try{
       $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, tc.tc_name, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id INNER JOIN task_category tc ON tc.id = t.task_category_id WHERE t.project_id = :projectid ORDER BY t.tk_created DESC LIMIT :limit";
       $params = [
         ":projectid" => $projectId,
         ":limit"     => $limit
+      ];
+
+      $dt = $this->pdo->ExecuteQuery($sql, $params);
+      $list = [];
+
+      foreach($dt as $dr){
+        $list[] = (object)[
+          "id" => $dr["id"],
+          "title" => $dr["tk_title"],
+          "deadline" => $dr["tk_deadline"],
+          "status" => $dr["tk_status"],
+          "created" => $dr["tk_created"],
+          "taskCategoryName" => $dr["tc_name"],
+          "completed" => $dr["tk_completed"],
+          "username" => $dr["us_name"]
+        ];
+      }
+
+      return $list;
+    }catch(PDOException $ex){
+      echo $ex->getMessage();
+      return null;
+    }
+  }
+
+  public function getAllByCategoryId(int $projectId, int $taskCategoryId){
+    try{
+      $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, tc.tc_name, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id INNER JOIN task_category tc ON tc.id = t.task_category_id WHERE t.project_id = :projectid AND t.task_category_id = :taskcategoryid ORDER BY t.tk_created DESC";
+      $params = [
+        ":projectid"      => $projectId,
+        ":taskcategoryid" => $taskCategoryId
       ];
 
       $dt = $this->pdo->ExecuteQuery($sql, $params);
