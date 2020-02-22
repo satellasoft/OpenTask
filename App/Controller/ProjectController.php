@@ -142,7 +142,7 @@ class ProjectController extends Controller{
       $notes = (new \App\Model\NoteModel())->getAllResumed($_COOKIE['pi'], 6);
 
       if($categoryId <= 0){
-        $task = (new \App\Model\TaskModel())->getAllResumed($_COOKIE['pi'], 10);
+        $task = (new \App\Model\TaskModel())->getAllResumed($_COOKIE['pi'], 25);
       }else{
         $task = (new \App\Model\TaskModel())->getAllByCategoryId($_COOKIE['pi'], $categoryId);
       }
