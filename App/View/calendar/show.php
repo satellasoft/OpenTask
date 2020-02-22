@@ -39,10 +39,11 @@ function getTasks(){
   }
   var base = valueById('base');
 
+  console.log( base + "api/calendar/" + obj.strIds);
+
   $.ajax({
-    url : base + "API/index.php?r=1",
-    data : obj,
-    type : 'POST',
+    url : base + "api/calendar/" + obj.strIds,
+    type : 'GET',
     dataType : "JSON",
     success : function(data){
       if(data != null){
