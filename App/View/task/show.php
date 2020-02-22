@@ -31,6 +31,7 @@
               <tr>
                 <th>Criado</th>
                 <th>Deadline</th>
+                <th>Data finalização</th>
                 <th>Status</th>
                 <th>Categoria</th>
                 <th>Autor</th>
@@ -41,6 +42,7 @@
               <tr class="table-info">
                 <td><?=convertDate($task->created, DATETIME_FORMAT)?></td>
                 <td><?=convertDate($task->deadline, DATE_FORMAT)?></td>
+                <td><?=$task->completed != null ? convertDate($task->completed, DATETIME_FORMAT) : "Em aberto"?></td>
                 <td><?php
                 if($task->status == 1){
                   echo "Ativo";
