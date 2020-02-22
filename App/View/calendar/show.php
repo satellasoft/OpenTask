@@ -12,7 +12,7 @@
       </div>
     </div>
     <input type="hidden" id="strIds" class="form-control" value="<?=$strIds;?>">
-    <div id='calendar-container'>
+    <div id='calendar-container' style="min-height:80vh;">
       <div id='calendar'></div>
     </div>
   </div>

@@ -70,7 +70,6 @@ class ProjectModel{
     }
   }
 
-
   public function getById($id){
     try{
       $sql = "SELECT p.pr_title, p.pr_description, p.pr_deadline, p.pr_created, p.pr_status, u.us_name, u.us_permission FROM project p INNER JOIN user u ON u.id = p.user_id WHERE p.id = :id";
