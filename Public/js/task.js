@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(){
   });
 }, false);
 
-function validateProject(update = false){
+function validateTask(update = false){
   var msg = "";
 
   if(update && valueById("txtId") <= 0)
@@ -23,6 +23,9 @@ function validateProject(update = false){
 
   if(valueById("slStatus") < 1 || valueById("slStatus") > 3)
     msg += "<p>- Status inválido</p>";
+
+  if(valueById("slCategory") < 1 || valueById("slStatus") == "")
+    msg += "<p>- Selecione uma categoria</p>";
 
   setHTMLById("dvAlert", msg);
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Core\Controller;
 use App\Model\TaskModel;
 use App\Model\ForumModel;
+use App\Model\CategoryModel;
 use App\Model\UploadModel;
 use App\Entity\Task;
 
@@ -22,7 +23,9 @@ class TaskController extends Controller{
   }
 
   public function create(){
-    $this->Load("task/create.php");
+    $this->Load("task/create.php", [
+      "categoryList" => (new CategoryModel)->getAllByProjectId($_COOKIE['pi'])
+    ]);
   }
 
   public function Headercreate(){
@@ -32,10 +35,13 @@ class TaskController extends Controller{
   public function store(){
     $task = new Task();
 
+    $deadLine = filter_input(INPUT_POST, "txtDeadline", FILTER_SANITIZE_STRING);
+
     $task->setTitle(filter_input(INPUT_POST, "txtTitle", FILTER_SANITIZE_STRING));
     $task->setDescription(filter_input(INPUT_POST, "txtDescription", FILTER_SANITIZE_SPECIAL_CHARS));
-    $task->setDeadline(filter_input(INPUT_POST, "txtDeadline", FILTER_SANITIZE_STRING));
+    $task->setDeadline($deadLine . " 23:59:59 ");
     $task->setStatus(filter_input(INPUT_POST, "slStatus", FILTER_SANITIZE_NUMBER_INT));
+    $task->getCategory()->setId(filter_input(INPUT_POST, "slCategory", FILTER_SANITIZE_NUMBER_INT));
     $task->setCreated(getCurrentDate());
     $task->getUser()->setId($_SESSION["i"]);
     $task->getProject()->setId($_COOKIE['pi']);
@@ -43,9 +49,9 @@ class TaskController extends Controller{
     $id = $this->taskModel->store($task);
 
     if($id > 0)
-    redirect(BASE . "task/show/{$id}");
+      redirect(BASE . "task/show/{$id}");
     else
-    $this->Load("task/result.php", ["message" => "Houve um erro ao tentar cadastrar"]);
+      $this->Load("task/result.php", ["message" => "Houve um erro ao tentar cadastrar"]);
   }
 
   //UPDATE
@@ -66,7 +72,8 @@ class TaskController extends Controller{
 
     $this->Load("task/edit.php", [
       "task" => $task,
-      "editable" => $editable
+      "editable" => $editable,
+      "categoryList" => (new CategoryModel)->getAllByProjectId($_COOKIE['pi'])
     ]);
   }
 
@@ -77,11 +84,14 @@ class TaskController extends Controller{
   public function update(){
     $task = new Task();
 
+    $deadLine = filter_input(INPUT_POST, "txtDeadline", FILTER_SANITIZE_STRING);
+
     $task->setId(filter_input(INPUT_POST, "txtId", FILTER_SANITIZE_NUMBER_INT));
     $task->setTitle(filter_input(INPUT_POST, "txtTitle", FILTER_SANITIZE_STRING));
     $task->setDescription(filter_input(INPUT_POST, "txtDescription", FILTER_SANITIZE_SPECIAL_CHARS));
-    $task->setDeadline(filter_input(INPUT_POST, "txtDeadline", FILTER_SANITIZE_STRING));
+    $task->setDeadline($deadLine . " 23:59:59 ");
     $task->setStatus(filter_input(INPUT_POST, "slStatus", FILTER_SANITIZE_NUMBER_INT));
+    $task->getCategory()->setId(filter_input(INPUT_POST, "slCategory", FILTER_SANITIZE_NUMBER_INT));
 
     if($task->getStatus() == 3){
       $task->setCompleted(getCurrentDate());

@@ -13,7 +13,7 @@
       </div>
 
       <div class="col-md-6">
-        <?php if( $task->completed == null): ?>
+        <?php if($task->status == 1): ?>
           <a href="<?=BASE?>forum/create/<?=$task->id?>" class="btn btn-info">Novo fórum</a>
           <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalUpload">Upload</a>
         <?php endif; ?>
@@ -31,8 +31,8 @@
               <tr>
                 <th>Criado</th>
                 <th>Deadline</th>
-                <th>Finalizado</th>
                 <th>Status</th>
+                <th>Categoria</th>
                 <th>Autor</th>
                 <th></th>
               </tr>
@@ -41,8 +41,16 @@
               <tr class="table-info">
                 <td><?=convertDate($task->created, DATETIME_FORMAT)?></td>
                 <td><?=convertDate($task->deadline, DATE_FORMAT)?></td>
-                <td><?=$task->completed != null ? convertDate($task->completed, DATETIME_FORMAT) : "Em aberto"?></td>
-                <td><?=$task->status == 1 ? "Ativo" : "Finalizado";?></td>
+                <td><?php
+                if($task->status == 1){
+                  echo "Ativo";
+                }elseif($task->status == 2){
+                  echo "<span class='text-primary'>Cancelado</span>";
+                }else{
+                  echo "Finalizado";
+                }
+                ?></td>
+                <td><?=$task->taskCategoryName;?></td>
                 <td><?=$task->username;?></td>
                 <td><?php if($task->userid == $_SESSION['i'] && $task->completed == null){ ?>
                   <a href="<?=BASE?>task/edit/<?=$task->id;?>" class="btn btn-primary btn-sm">Editar</a>

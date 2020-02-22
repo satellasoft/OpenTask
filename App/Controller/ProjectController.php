@@ -50,9 +50,9 @@ class ProjectController extends Controller{
 
     $msg = "";
     if($this->projectModel->store($project))
-      $msg = "<span class='text-success'>Projeto criado</span>";
+    $msg = "<span class='text-success'>Projeto criado</span>";
     else
-      $msg = "<span class='text-danger'>Houve um erro ao tentar criar o projeto</span>";
+    $msg = "<span class='text-danger'>Houve um erro ao tentar criar o projeto</span>";
 
     $this->Load("project/result.php", ["message" => $msg]);
   }
@@ -94,14 +94,13 @@ class ProjectController extends Controller{
 
     $msg = "";
     if($this->projectModel->update($project))
-    $msg = "<span class='text-success'>Projeto editado</span>";
+      $msg = "<span class='text-success'>Projeto editado</span>";
     else
-    $msg = "<span class='text-danger'>Houve um erro ao tentar editar o projeto</span>";
+      $msg = "<span class='text-danger'>Houve um erro ao tentar editar o projeto</span>";
 
     $this->Load("project/result.php", ["message" => $msg]);
   }
 
-  /*SHOW*/
   public function show($id = 0){
     $this->protectMethod();
     if($id > 0){
@@ -133,7 +132,7 @@ class ProjectController extends Controller{
       }
       $project = $this->projectModel->getById($_COOKIE['pi']);
       $notes = (new \App\Model\NoteModel())->getAllResumed($_COOKIE['pi'], 6);
-      $task = (new \App\Model\TaskModel())->getAllResumed($_COOKIE['pi']);
+      $task = (new \App\Model\TaskModel())->getAllResumed($_COOKIE['pi'], 10);
       $this->Load("project/myproject.php",
       [
         "project"  => $project,

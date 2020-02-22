@@ -12,7 +12,7 @@ class TaskModel{
 
   public function store(Task $task){
     try{
-      $sql = "INSERT INTO task (tk_title, tk_description, tk_deadline, tk_created, tk_status, user_id, project_id) VALUES (:title, :description, :deadline, :created, :status, :userid, :projectid)";
+      $sql = "INSERT INTO task (tk_title, tk_description, tk_deadline, tk_created, tk_status, user_id, task_category_id, project_id) VALUES (:title, :description, :deadline, :created, :status, :userid, :taskcategoryid, :projectid)";
 
       $params = array(
         ":title"       => $task->getTitle(),
@@ -20,6 +20,7 @@ class TaskModel{
         ":deadline"    => $task->getDeadline(),
         ":created"     => $task->getCreated(),
         ":status"      => $task->getStatus(),
+        ":taskcategoryid" => $task->getCategory()->getId(),
         ":userid"      => $task->getUser()->getId(),
         ":projectid"   => $task->getProject()->getId()
       );
@@ -38,7 +39,7 @@ class TaskModel{
 
   public function update(Task $task){
     try{
-      $sql = "UPDATE task SET tk_title = :title, tk_description = :description,tk_completed = :completed, tk_deadline = :deadline, tk_status = :status WHERE user_id = :userid AND project_id = :projectid AND id = :id";
+      $sql = "UPDATE task SET tk_title = :title, tk_description = :description,tk_completed = :completed, tk_deadline = :deadline, tk_status = :status, task_category_id = :taskcategoryid WHERE user_id = :userid AND project_id = :projectid AND id = :id";
 
       $params = array(
         ":id"          => $task->getId(),
@@ -48,6 +49,7 @@ class TaskModel{
         ":completed"    => $task->getCompleted(),
         ":status"      => $task->getStatus(),
         ":userid"      => $task->getUser()->getId(),
+        ":taskcategoryid" => $task->getCategory()->getId(),
         ":projectid"   => $task->getProject()->getId()
       );
 
@@ -65,7 +67,7 @@ class TaskModel{
 
   public function getById(int $taskId, int $projectId){
     try{
-      $sql = "SELECT t.tk_title, t.tk_description, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, u.us_name, u.id as userid FROM task t INNER JOIN user u ON u.id = t.user_id WHERE t.project_id = :projectid AND t.id = :taskid";
+      $sql = "SELECT t.tk_title, t.tk_description, t.tk_deadline, t.tk_status, t.tk_created, t.task_category_id, t.tk_completed, tc.tc_name, u.us_name, u.id as userid FROM task t INNER JOIN user u ON u.id = t.user_id INNER JOIN task_category tc ON tc.id = t.task_category_id WHERE t.project_id = :projectid AND t.id = :taskid";
       $params = array(
         ":projectid" => $projectId,
         ":taskid" => $taskId
@@ -74,14 +76,16 @@ class TaskModel{
       $dr = $this->pdo->ExecuteQueryOneRow($sql, $params);
       return (object)[
         "id" => $taskId,
-        "title" => $dr["tk_title"],
-        "description" => $dr["tk_description"],
-        "deadline" => $dr["tk_deadline"],
-        "status" => $dr["tk_status"],
-        "created" => $dr["tk_created"],
-        "completed" => $dr["tk_completed"],
-        "userid" => $dr["userid"],
-        "username" => $dr["us_name"],
+        "title" => $dr["tk_title"] ?? null,
+        "description" => $dr["tk_description"] ?? null,
+        "deadline" => $dr["tk_deadline"] ?? null,
+        "status" => $dr["tk_status"] ?? null,
+        "created" => $dr["tk_created"] ?? null,
+        "completed" => $dr["tk_completed"] ?? null,
+        "taskCategoryId" => $dr["task_category_id"] ?? null,
+        "taskCategoryName" => $dr["tc_name"] ?? null,
+        "userid" => $dr["userid"] ?? null,
+        "username" => $dr["us_name"] ?? null
       ];
     }catch(PDOException $ex){
       echo $ex->getMessage();
@@ -89,14 +93,15 @@ class TaskModel{
     }
   }
 
-  public function getAllResumed(int $projectId = 0){
+  public function getAllResumed(int $projectId = 0, $limit = 2){
     try{
-      $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id WHERE t.project_id = :projectid ORDER BY t.tk_created DESC";
-      $param = array(
-        ":projectid" => $projectId
-      );
+      $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, tc.tc_name, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id INNER JOIN task_category tc ON tc.id = t.task_category_id WHERE t.project_id = :projectid ORDER BY t.tk_created DESC LIMIT :limit";
+      $params = [
+        ":projectid" => $projectId,
+        ":limit"     => $limit
+      ];
 
-      $dt = $this->pdo->ExecuteQuery($sql, $param);
+      $dt = $this->pdo->ExecuteQuery($sql, $params);
       $list = [];
 
       foreach($dt as $dr){
@@ -106,6 +111,7 @@ class TaskModel{
           "deadline" => $dr["tk_deadline"],
           "status" => $dr["tk_status"],
           "created" => $dr["tk_created"],
+          "taskCategoryName" => $dr["tc_name"],
           "completed" => $dr["tk_completed"],
           "username" => $dr["us_name"]
         ];

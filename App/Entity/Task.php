@@ -2,6 +2,7 @@
 namespace App\Entity;
 use App\Entity\Project;
 use App\Entity\User;
+use App\Entity\Category;
 
 class Task{
 
@@ -12,13 +13,15 @@ class Task{
 	private $created;
 	private $completed;
 	private $status;
-	private $user;
 	private $project;
+	private $user;
+	private $category;
 
-  public function __construct(){
-    $this->user    = new User();
-    $this->project = new Project();
-  }
+	public function __construct(){
+		$this->user    = new User();
+		$this->project = new Project();
+		$this->category = new Category();
+	}
 
 	public function setId($id){
 		$this->id = $id;
@@ -56,6 +59,10 @@ class Task{
 		$this->project = $project;
 	}
 
+	public function setCategory($category){
+		$this->category = $category;
+	}
+
 	public function getId(){
 		return $this->id;
 	}
@@ -90,5 +97,9 @@ class Task{
 
 	public function getProject(){
 		return $this->project;
+	}
+
+	public function getCategory(){
+		return $this->category;
 	}
 }

@@ -13,19 +13,28 @@
       </div>
     </div>
 
-    <form action="<?=BASE?>task/store" method="post" onsubmit="return validateProject(false);">
+    <form action="<?=BASE?>task/store" method="post" onsubmit="return validateTask(false);">
       <div class="row">
         <div class="col-md-4">
           <label for="txtTitle">Título</label>
           <input type="text" name="txtTitle" id="txtTitle" class="form-control" placeholder="Project title">
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-2">
           <label for="txtDeadline">Deadline</label>
-          <input type="datetime-local" name="txtDeadline" id="txtDeadline" class="form-control">
+          <input type="date" name="txtDeadline" id="txtDeadline" class="form-control">
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
+          <label for="slStatus">Categoria</label>
+          <select class="form-control" name="slCategory" id="slCategory">
+            <?php foreach($categoryList as $category) :?>
+              <option value="<?=$category->id?>" class="text-info"><?=$category->name?></option>
+            <?php endforeach;?>
+          </select>
+        </div>
+
+        <div class="col-md-3">
           <label for="slStatus">Status</label>
           <select class="form-control" name="slStatus" id="slStatus">
             <option value="1" class="text-info">Ativo</option>
