@@ -20,13 +20,14 @@ class UserProjectController extends Controller{
   }
 
   /*SHOW Group*/
-  public function show($projectId){
+  public function show($projectId, string $projectName = ""){
     $this->protectMethod();
 
     $this->Load("userproject/show.php", [
-      "listUserProject" => $this->userProjectModel->getAll($projectId),
+      "listUserProject"    => $this->userProjectModel->getAll($projectId),
       "listUserNotProject" => (new UserModel())->getAllNotProject($projectId),
-      "projectId" => $projectId
+      "projectId"   => $projectId,
+      "projectName" => urldecode($projectName)
     ]);
   }
 

@@ -41,7 +41,7 @@
 
       <div class="col-md-4 col-sm-12">
         <a href="<?=BASE?>project/show/<?=$id?>" class="btn btn-primary m-2 ">Visualizar</a>
-        <a href="<?=BASE?>userProject/show/<?=$id?>" class="btn btn-primary m-2">Grupos</a>
+        <a href="<?=BASE?>userProject/show/<?=$id?>/<?=urlencode($project->title);?>" class="btn btn-primary m-2">Grupos</a>
         <a href="<?=BASE?>category/show/<?=$id?>" class="btn btn-primary m-2">Categorias</a>
         <?php if($project->status == 1): ?>
           <a href="<?=BASE?>project/edit/<?=$id?>" class="btn btn-warning m-2">Editar</a>

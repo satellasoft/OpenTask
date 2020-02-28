@@ -57,7 +57,7 @@
                         <button id="btnGroupDrop3" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop3" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 35px, 0px);">
                           <a class="dropdown-item text-info" href="<?=BASE?>project/show/<?=$project->id;?>">Visualizar</a>
-                          <a class="dropdown-item text-info" href="<?=BASE?>userProject/show/<?=$project->id?>">Grupos</a>
+                          <a class="dropdown-item text-info" href="<?=BASE?>userProject/show/<?=$project->id?>/<?=urlencode($project->title);?>">Grupos</a>
                           <a class="dropdown-item text-info" href="<?=BASE?>category/show/<?=$project->id?>">Categoria</a>
                           <?php
                           if($project->status == 1){
