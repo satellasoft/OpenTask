@@ -43,7 +43,7 @@
                   <td><?=$user->login;?></td>
                   <td><?=$user->permission == 1 ? "Administrador" : "Comum";?></td>
                   <td>
-                    <a href="<?=BASE?>userProject/changestatus/<?=$statusUrl?>" class="btn <?=$user->status == 1 ? 'btn-danger' : 'btn-success'?>"><?=$user->status == 1 ? 'Bloquear' : 'Habilitar'?></a>
+                    <a href="<?=BASE?>userProject/changestatus/<?=$statusUrl?>/<?=urlencode($projectName);?>" class="btn <?=$user->status == 1 ? 'btn-danger' : 'btn-success'?>"><?=$user->status == 1 ? 'Bloquear' : 'Habilitar'?></a>
                   </td>
                 </tr>
                 <?php
