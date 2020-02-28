@@ -93,12 +93,13 @@ class TaskModel{
     }
   }
 
-  public function getAllResumed(int $projectId = 0, $limit = 20){
+  public function getAllResumed(int $projectId = 0, $limit = 20, $status = 1){
     try{
-      $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, tc.tc_name, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id INNER JOIN task_category tc ON tc.id = t.task_category_id WHERE t.project_id = :projectid ORDER BY t.tk_created DESC LIMIT :limit";
+      $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, tc.tc_name, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id INNER JOIN task_category tc ON tc.id = t.task_category_id WHERE t.project_id = :projectid AND t.tk_status = :status ORDER BY t.tk_created DESC LIMIT :limit";
       $params = [
         ":projectid" => $projectId,
-        ":limit"     => $limit
+        ":limit"     => $limit,
+        ":status"    => $status
       ];
 
       $dt = $this->pdo->ExecuteQuery($sql, $params);
@@ -124,12 +125,13 @@ class TaskModel{
     }
   }
 
-  public function getAllByCategoryId(int $projectId, int $taskCategoryId){
+  public function getAllByCategoryId(int $projectId, int $taskCategoryId, int $status = 1){
     try{
-      $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, tc.tc_name, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id INNER JOIN task_category tc ON tc.id = t.task_category_id WHERE t.project_id = :projectid AND t.task_category_id = :taskcategoryid ORDER BY t.tk_created DESC";
+      $sql = "SELECT t.id, t.tk_title, t.tk_deadline, t.tk_status, t.tk_created, t.tk_completed, tc.tc_name, u.us_name FROM task t INNER JOIN user u ON u.id = t.user_id INNER JOIN task_category tc ON tc.id = t.task_category_id WHERE t.project_id = :projectid AND t.task_category_id = :taskcategoryid AND t.tk_status = :status ORDER BY t.tk_created DESC";
       $params = [
         ":projectid"      => $projectId,
-        ":taskcategoryid" => $taskCategoryId
+        ":taskcategoryid" => $taskCategoryId,
+        ":status"    => $status
       ];
 
       $dt = $this->pdo->ExecuteQuery($sql, $params);

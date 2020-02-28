@@ -41,9 +41,9 @@
     </div>
 
     <hr>
-    <div class="row">
-      <div class="col-md-3">
-        <form method="post" id="frmSelectCategory">
+    <form method="post" id="frmSelectCategory">
+      <div class="row">
+        <div class="col-md-3">
           <label for="slCategory">Selecione Categoria</label>
           <select class="form-control" name="slCategoryId" id="slCategoryId" onchange="submitForm();">
             <option value="">Selecione</option>
@@ -51,9 +51,18 @@
               <option value="<?=$category->id?>" class="text-info" <?=$categoryId == $category->id ? "selected" : ""?>><?=$category->name?></option>
             <?php endforeach;?>
           </select>
-        </form>
+        </div>
+
+        <div class="col-md-2">
+          <label for="slStatus">Selecione um status</label>
+          <select class="form-control" name="slStatus" id="slStatus" onchange="submitForm();">
+            <option class="text-success font-weight-bold" value="1" <?=$status == 1 ? "selected" : ""?>>Aberto</option>
+            <option class="text-danger font-weight-bold"  value="2" <?=$status == 2 ? "selected" : ""?>>Cancelado</option>
+            <option class="text-info font-weight-bold"    value="3" <?=$status == 3 ? "selected" : ""?>>Finalizado</option>
+          </select>
+        </div>
       </div>
-    </div>
+    </form>
     <hr>
 
     <h4>Tarefas</h4>
@@ -182,7 +191,7 @@
 </div>
 </div>
 <script>
-  function submitForm(){
-    document.getElementById("frmSelectCategory").submit();
-  }
+function submitForm(){
+  document.getElementById("frmSelectCategory").submit();
+}
 </script>

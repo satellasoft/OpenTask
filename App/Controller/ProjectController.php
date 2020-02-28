@@ -128,6 +128,7 @@ class ProjectController extends Controller{
     public function myProject(){
 
       $categoryId = filter_input(INPUT_POST, "slCategoryId", FILTER_SANITIZE_NUMBER_INT);
+      $status     = filter_input(INPUT_POST, "slStatus", FILTER_SANITIZE_NUMBER_INT);
 
       if(!isset($_COOKIE['pi'])){
         $this->Load("message/nolink.php", [
@@ -141,10 +142,14 @@ class ProjectController extends Controller{
       $project = $this->projectModel->getById($_COOKIE['pi']);
       $notes = (new \App\Model\NoteModel())->getAllResumed($_COOKIE['pi'], 6);
 
+      if($status == 0){
+        $status = 1;//Open
+      }
+
       if($categoryId <= 0){
-        $task = (new \App\Model\TaskModel())->getAllResumed($_COOKIE['pi'], 25);
+        $task = (new \App\Model\TaskModel())->getAllResumed($_COOKIE['pi'], 25, $status);
       }else{
-        $task = (new \App\Model\TaskModel())->getAllByCategoryId($_COOKIE['pi'], $categoryId);
+        $task = (new \App\Model\TaskModel())->getAllByCategoryId($_COOKIE['pi'], $categoryId, $status);
       }
 
       $this->Load("project/myproject.php",
@@ -154,7 +159,8 @@ class ProjectController extends Controller{
         "listTask" => $task,
         "members" => (new \App\Model\UserProjectModel())->getAllByProject($_COOKIE['pi']),
         "categoryList" => (new CategoryModel())->getAllByProjectId($_COOKIE['pi']),
-        "categoryId"  => $categoryId
+        "categoryId"  => $categoryId,
+        "status" => $status
       ]);
     }
 
