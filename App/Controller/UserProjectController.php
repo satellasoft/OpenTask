@@ -64,13 +64,12 @@ class UserProjectController extends Controller{
     $status = ($status == 1 ? 2 : 1);
 
     if($this->userProjectModel->changeStatus($userId, $projectId, $status)){
-      redirect(BASE . "userProject/show/". $projectId);
+      redirect(BASE . "userProject/show/". $projectId . "/".$projectName);
     }
 
     $this->Load("userproject/result.php", [
       "message" => "<span class='text-success'>Houve um erro ao tentar alterar o status</span>",
-      "id" => $projectId,
-      "projectName" => $projectName
+      "id" => $projectId
     ]);
   }
 
