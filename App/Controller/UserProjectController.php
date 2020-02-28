@@ -58,7 +58,7 @@ class UserProjectController extends Controller{
     ]);
   }
 
-  public function changeStatus($userId, $projectId, $status){
+  public function changeStatus($userId, $projectId, $status, string $projectName = ""){
     $this->protectMethod();
 
     $status = ($status == 1 ? 2 : 1);
@@ -69,7 +69,8 @@ class UserProjectController extends Controller{
 
     $this->Load("userproject/result.php", [
       "message" => "<span class='text-success'>Houve um erro ao tentar alterar o status</span>",
-      "id" => $projectId
+      "id" => $projectId,
+      "projectName" => $projectName
     ]);
   }
 
