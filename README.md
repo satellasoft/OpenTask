@@ -37,4 +37,18 @@ If everything has gone well so far, then your database settings and installation
 
 # Configuring the application
 
-Coming soon.
+The configuration on the server is very simple, let's start with .htaccess.
+
+**.htaccess**
+
+This file has some settings, among them and the main one, is to send the user to the public folder.
+
+In **line 6**, we have the following code:
+
+```
+RewriteRule ^((?!public/).*)$ opentask/public/$1 [L,NC] 
+```
+
+Notice that we have the name opentask, which refers to the folder in which the project is located, so if your project is in root, just leave **public/**. If your project is in another directory, point the path to the public folder, such as: **myserver/opentask/public/**.
+
+We just need to make this change, nothing else is needed in this file.
