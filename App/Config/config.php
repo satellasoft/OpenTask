@@ -1,15 +1,15 @@
 <?php
 
-define("BASE", "/opentask/");
+define("BASE", "/opentask/");//Path to project
 //URI CONTROLLER
-define("URI_UNLINK_COUNT", 2);
-define("URI_DEBUG", false);//change to false after test
+define("URI_UNLINK_COUNT", 2);//Remove '/'
+define("URI_DEBUG", false);//Debug URI
 
 //DATABASE
-define("DB_HOST", "localhost");
-define("DB_USER", "root");
-define("DB_PASS", "");
-define("DB_NAME", "opentask");
+define("DB_HOST", "localhost");//Host database
+define("DB_USER", "root"); //User database
+define("DB_PASS", "");//Password database
+define("DB_NAME", "opentask"); //Database name
 
 //DEFAULT PASSWORD ON RESET
 define("DEFAULT_USER_PASS", "A123456Z");
@@ -19,6 +19,7 @@ define("DATE_FORMAT", "d/m/Y");
 define("DATETIME_FORMAT", "d/m/Y H:i:s");
 define("TIMEZONE", "America/Sao_Paulo");
 
+//Do not change the code below
 //MODEL DEFAULT VALUES
 define("CONTROLLER", "HomeController");
 define("METHOD", "index");
