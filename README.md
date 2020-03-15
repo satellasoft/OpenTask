@@ -74,3 +74,5 @@ Access your project and include: **controller/method/param** in the URL, eg: **h
 **Line 34:** List with allowed MIME types.
 
 **Line 44:** With the value **true**, the files will be renamed dynamically, if you want to keep the default file name, assign the **false** value. Remember, if you upload files with the same name, then they will be overwritten.
+
+**Youtube Open Task Installation Guide** - [https://youtu.be/tGcZAxSvBrc]
