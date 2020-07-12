@@ -48,7 +48,7 @@ class Note{
   }
 
   public function setUser($user){
-    $this->user = $useruser;
+    $this->user = $user;
   }
 
   public function getId(){
